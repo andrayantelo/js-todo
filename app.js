@@ -1,17 +1,18 @@
 //todo list webapp
 
 var List = function () {
+    var self = this
     
-    this.listItems = [];
+    self.listItems = [];
 
-    this.addToList = function(item) {
-        if (listItems.length === 0) {
-            listItems[0] = item;
+    self.addToList = function(item) {
+        if (self.listItems.length === 0) {
+            self.listItems[0] = item;
         } else {
-            listItems[listItems.length - 1] = item;
+            self.listItems[self.listItems.length - 1] = item;
             
         }
-        return listItems;
+        return this.listItems;
     };
     
 };
