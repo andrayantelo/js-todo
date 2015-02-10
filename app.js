@@ -9,7 +9,7 @@ var List = function () {
         if (self.listItems.length === 0) {
             self.listItems[0] = item;
         } else {
-            self.listItems[self.listItems.length - 1] = item;
+            self.listItems[self.listItems.length] = item;
             
         }
         return this.listItems;
