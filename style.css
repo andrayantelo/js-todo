@@ -12,26 +12,40 @@ body {
 }
 
 .outer {
+    position: relative;
     background-color: #ffffff;
     box-shadow: 10px 10px 5px #888888;
    /* border: 1px, solid, #888888;*/
     height: 280px;
-    width: 280px;
-    position: relative;
+    width: 400px;
     margin-left: auto;
     margin-right: auto;
     opacity: 0.5;
 }
 
+form {
+    display: inline-block;
+}
+
+textarea {
+    position: absolute;
+    margin-top: -14px;
+    width: 395px;
+}
+    
 #button {
-    border-radius: 35px;
+    display: inline-block;
+    border-radius: 0px;
     background-color: #3d1256;
     color: white;
     font-family: 'Open Sans', sans-serif, Courier, Arial;
     font-size: 22px;
     text-align: center;
-    padding: 25px;
-    position: absolute;
+    padding: 5px;
+    position: relative; 
+    margin-left: 350px;
+    margin-top: 18px;
+    
 }
 
 
