@@ -8,7 +8,7 @@ $(document).ready(function() {
         $('.outer').fadeTo('slow', 0.5)
         
     $('#button').click(function(){
-    var toAdd = $('#myTextArea').val();
+    var toAdd = $('input[name=checkListItem]').val();
     $('.list').append('<div class="item">' + toAdd + '</div>');
     })
     
