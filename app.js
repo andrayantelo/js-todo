@@ -6,6 +6,12 @@ $(document).ready(function() {
         });
     $('.outer').mouseleave(function() {
         $('.outer').fadeTo('slow', 0.5)
+        
+    $('#button').click(function(){
+    var toAdd = $('#myTextArea').val();
+    $('.list').append('<div class="item">' + toAdd + '</div>');
+    })
+    
     });
 });
 

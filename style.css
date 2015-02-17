@@ -27,7 +27,7 @@ form {
     display: inline-block;
 }
 
-textarea {
+#myTextArea {
     position: absolute;
     margin-top: -14px;
     width: 395px;
