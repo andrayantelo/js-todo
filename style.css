@@ -23,6 +23,17 @@ body {
     opacity: 0.5;
 }
 
+#button {
+    border-radius: 35px;
+    background-color: #3d1256;
+    color: white;
+    font-family: 'Open Sans', sans-serif, Courier, Arial;
+    font-size: 22px;
+    text-align: center;
+    padding: 25px;
+    position: absolute;
+}
+
 
 /*.inner {
     background-color: #ffffff;
