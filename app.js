@@ -1,10 +1,11 @@
 //todo list webapp
+// toggleClass possibly
 $(document).ready(function() {
     $('.outer').mouseenter(function() {
         $('.outer').fadeTo('fast', 1)
         });
     $('.outer').mouseleave(function() {
-        $('.outer').fadeTo('fast', 0.5)
+        $('.outer').fadeTo('slow', 0.5)
     });
 });
 
