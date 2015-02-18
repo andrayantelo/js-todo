@@ -10,9 +10,14 @@ $(document).ready(function() {
     
     $('#button').mouseenter(function() {
         $('#button').css('background-color','white');
+        $('#button').css('color', '#3d1256');
+        $('#button').css('border', 'solid');
+        $('#button').css('border', '5px');
+        $('#button').css('border', '#3d1256');
     })
     $('#button').mouseleave(function() {
         $('#button').css('background-color','#3d1256');
+        $('#button').css('color', 'white');
     })
         
         
