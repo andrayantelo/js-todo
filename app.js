@@ -26,6 +26,10 @@ $(document).ready(function() {
     $('.list').prepend('<div class="item">' + toAdd + '</div>');
     })
     
+    $(document).on('click', '.item', function() {
+        $(this).remove();
+    })
+    
 });
 
 
