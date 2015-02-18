@@ -5,13 +5,14 @@ $(document).ready(function() {
         $('form').fadeTo('fast', 1)
     })
     $('form').mouseleave(function() {
-        $('form').fadeTo('slow', 0.5)
+        $('form').fadeTo('slow', 0.2)
     })
+    
     $('#button').mouseenter(function() {
-        $('#button').css(background-color:white)
+        $('#button').css('background-color','white');
     })
     $('#button').mouseleave(function() {
-        $('#button').css(background-color:#3d1256);
+        $('#button').css('background-color','#3d1256');
     })
         
         
@@ -20,7 +21,6 @@ $(document).ready(function() {
     $('.list').append('<div class="item">' + toAdd + '</div>');
     })
     
-    });
 });
 
 

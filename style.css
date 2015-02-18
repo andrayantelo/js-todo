@@ -14,7 +14,8 @@ body {
 
 .outer {
     position: relative;
-    background-color: #ffffff;
+    /* bg-c: #ffffff */
+    background-color: #f1f1f1;
     box-shadow: 10px 10px 5px #888888;
    /* border: 1px, solid, #888888;*/
     height: 280px;
@@ -26,7 +27,7 @@ body {
 
 form {
     display: inline-block;
-    position: absolute;
+    
 }
 
 #myTextArea {
