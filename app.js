@@ -12,8 +12,8 @@ $(document).ready(function() {
         $('#button').css('background-color','white');
         $('#button').css('color', '#3d1256');
         $('#button').css('border', 'solid');
-        $('#button').css('border', '5px');
-        $('#button').css('border', '#3d1256');
+     //   $('#button').css('border', '5px');
+     //   $('#button').css('border', '#3d1256');
     })
     $('#button').mouseleave(function() {
         $('#button').css('background-color','#3d1256');
@@ -22,8 +22,8 @@ $(document).ready(function() {
         
         
     $('#button').click(function(){
-    var toAdd = $('input[name=checkListItem]').val();
-    $('.list').append('<div class="item">' + toAdd + '</div>');
+    var toAdd = $('textarea[name=checkListItem]').val();
+    $('.list').prepend('<div class="item">' + toAdd + '</div>');
     })
     
 });
