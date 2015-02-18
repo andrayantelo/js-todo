@@ -1,11 +1,19 @@
 //todo list webapp
 // toggleClass possibly
 $(document).ready(function() {
-    $('.outer').mouseenter(function() {
-        $('.outer').fadeTo('fast', 1)
-        });
-    $('.outer').mouseleave(function() {
-        $('.outer').fadeTo('slow', 0.5)
+    $('form').mouseenter(function() {
+        $('form').fadeTo('fast', 1)
+    })
+    $('form').mouseleave(function() {
+        $('form').fadeTo('slow', 0.5)
+    })
+    $('#button').mouseenter(function() {
+        $('#button').css(background-color:white)
+    })
+    $('#button').mouseleave(function() {
+        $('#button').css(background-color:#3d1256);
+    })
+        
         
     $('#button').click(function(){
     var toAdd = $('input[name=checkListItem]').val();
