@@ -18,6 +18,7 @@ $(document).ready(function() {
     $('#button').mouseleave(function() {
         $('#button').css('background-color','#3d1256');
         $('#button').css('color', 'white');
+        $('#button').css('border', 'none');
     })
         
         
