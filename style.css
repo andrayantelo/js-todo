@@ -13,8 +13,17 @@ body {
 }
 
 .outer {
-   
+    position: relative;
+    text-align: center;
 }
+
+.outer div {
+    background-color:white;
+    display: inline-block;
+    vertical-align: top;
+    
+}
+
 /*.outer {
     position: relative; */
     /* bg-c: #ffffff */
@@ -28,21 +37,14 @@ body {
     opacity: 0.5;
 } */
 
-form {
-    display: inline-block;
+#input {
+    max-width: 1200px;
     
-}
-
-#myTextArea {
-    position: relative;
-   /* margin-top: -14px; */
-    width: 395px;
-    margin-left: auto;
-    margin-right: auto;
+   
 }
     
 #button {
-    display: inline-block;
+    
     border-radius: 0px;
     background-color: #3d1256;
     color: white;
@@ -50,12 +52,8 @@ form {
     font-size: 18px;
     text-align: center;
     padding: 5px;
-    position: relative;
-    margin-left: auto;
-    margin-right: auto;
-   /* margin-top: -20px;*/
-    
-    
+    max-width: 50px;
+   
 }
 
 
