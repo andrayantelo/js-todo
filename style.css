@@ -24,6 +24,10 @@ body {
     
 }
 
+#input {
+    position: relative;
+}
+
 #input form[name="checkListForm"] input[name="checkListItem"] {
     width: 400px;
    
@@ -39,7 +43,21 @@ body {
     text-align: center;
     padding: 5px;
     max-width: 50px;
-   
+    position: absolute;
+    margin-top: 5px;
+    margin-left: 160px;
+}
+
+.list {
+    text-align: center;
+    margin-top: 50px;
+}
+
+.list .item {
+    width: 400px;
+    background-color: white;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 
