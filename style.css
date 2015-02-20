@@ -24,19 +24,6 @@ body {
     
 }
 
-/*.outer {
-    position: relative; */
-    /* bg-c: #ffffff */
-/*    background-color: #f1f1f1;
-    box-shadow: 10px 10px 5px #888888; */
-   /* border: 1px, solid, #888888;*/
-/*    height: 280px;
-    width: 400px;
-    margin-left: auto;
-    margin-right: auto;
-    opacity: 0.5;
-} */
-
 #input {
     max-width: 1200px;
     
@@ -57,11 +44,3 @@ body {
 }
 
 
-/*.inner {
-    background-color: #ffffff;
-    box-shadow: 10px 10px 5px #888888;
-    height: 275px;
-    width: 275px;
-    position: absolute;
-}
-*/
