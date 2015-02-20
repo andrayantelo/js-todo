@@ -24,9 +24,8 @@ body {
     
 }
 
-#input {
-    max-width: 1200px;
-    
+#input form[name="checkListForm"] input[name="checkListItem"] {
+    width: 400px;
    
 }
     

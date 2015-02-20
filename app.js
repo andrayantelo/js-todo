@@ -23,7 +23,7 @@ $(document).ready(function() {
         
         
     $('#button').click(function(){
-    var toAdd = $('textarea[name=checkListItem]').val();
+    var toAdd = $('input[name=checkListItem]').val();
     $('.list').prepend('<div class="item">' + toAdd + '</div>');
     })
     
