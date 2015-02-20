@@ -1,12 +1,12 @@
 //todo list webapp
 // toggleClass possibly
 $(document).ready(function() {
-    $('form').mouseenter(function() {
-        $('form').fadeTo('fast', 1)
-    })
-    $('form').mouseleave(function() {
-        $('form').fadeTo('slow', 0.2)
-    })
+    //$('#myTextArea').mouseenter(function() {
+    //    $('#myTextArea).fadeTo('fast', 1)
+    //})
+    //$('#myTextArea').mouseleave(function() {
+    //    $('#MyTextArea').fadeTo('slow', 0.2)
+    //})
     
     $('#button').mouseenter(function() {
         $('#button').css('background-color','white');

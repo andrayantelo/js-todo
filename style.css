@@ -9,21 +9,24 @@ h1 {
 
 body {
     background-color: #f1f1f1;
-    position: relative;
+
 }
 
 .outer {
-    position: relative;
+   
+}
+/*.outer {
+    position: relative; */
     /* bg-c: #ffffff */
-    background-color: #f1f1f1;
-    box-shadow: 10px 10px 5px #888888;
+/*    background-color: #f1f1f1;
+    box-shadow: 10px 10px 5px #888888; */
    /* border: 1px, solid, #888888;*/
-    height: 280px;
+/*    height: 280px;
     width: 400px;
     margin-left: auto;
     margin-right: auto;
     opacity: 0.5;
-} 
+} */
 
 form {
     display: inline-block;
@@ -31,9 +34,11 @@ form {
 }
 
 #myTextArea {
-    position: absolute;
-    margin-top: -14px;
+    position: relative;
+   /* margin-top: -14px; */
     width: 395px;
+    margin-left: auto;
+    margin-right: auto;
 }
     
 #button {
@@ -46,8 +51,9 @@ form {
     text-align: center;
     padding: 5px;
     position: relative;
-    margin-left: 400px;
-    margin-top: -20px;
+    margin-left: auto;
+    margin-right: auto;
+   /* margin-top: -20px;*/
     
     
 }
