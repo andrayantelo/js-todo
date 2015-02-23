@@ -28,6 +28,10 @@ $(document).ready(function() {
         $(this).remove();
     })
     
+    $('input').focus( funtion() {
+        $('input').css('outline-color', '#3d1256');
+    })
+    
 });
 
 
