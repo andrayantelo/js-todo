@@ -1,10 +1,4 @@
 $(document).ready(function() {
-    //$('#myTextArea').mouseenter(function() {
-    //    $('#myTextArea).fadeTo('fast', 1)
-    //})
-    //$('#myTextArea').mouseleave(function() {
-    //    $('#MyTextArea').fadeTo('slow', 0.2)
-    //})
     
     $('#button').mouseenter(function() {
         $('#button').css('background-color','white');
@@ -17,8 +11,8 @@ $(document).ready(function() {
         $('#button').css('color', 'white');
         $('#button').css('border', 'none');
     })
-        
-        
+    
+    
     $('#button').click(function(){
     var toAdd = $('input[name=checkListItem]').val();
     $('.list').prepend('<div class="item">' + toAdd + '</div>');
@@ -28,9 +22,6 @@ $(document).ready(function() {
         $(this).remove();
     })
     
-    $('input').focus( funtion() {
-        $('input').css('outline-color', '#3d1256');
-    })
     
 });
 
