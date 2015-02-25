@@ -61,6 +61,7 @@ body {
     margin-right: auto;
     cursor: pointer;
     border: 1px solid black;
+    position: relative;
 }
 
 
