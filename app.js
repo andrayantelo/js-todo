@@ -22,6 +22,8 @@ $(document).ready(function() {
         $(this).remove();
     })
     
+    $('.list').sortable();
+    
     
 });
 
