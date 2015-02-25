@@ -12,11 +12,19 @@ $(document).ready(function() {
         $('#button').css('border', 'none');
     })
     
+    $('input[checkListItem]').keyup(function (event) {
+        if(event.keycode == 13)  // the enter key code
+              {
+          $('#button').click();
+          return false;
+          }
+    }); 
     
     $('#button').click(function(){
     var toAdd = $('input[name=checkListItem]').val();
     $('#list').prepend('<li class="item">' + toAdd + '</li>');
     })
+    
     
     $(document).on('click', '.item', function() {
         $(this).remove();
