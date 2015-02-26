@@ -28,7 +28,7 @@ body {
     position: relative;
 }
 
-#input form[name="checkListForm"] input[name="checkListItem"] {
+#input form[name="checkListForm"] #checkListEntry {
     width: 400px;
    
 }
@@ -59,8 +59,8 @@ body {
     background-color: white;
     margin-left: auto;
     margin-right: auto;
+    margin-top: 10px;
     cursor: pointer;
-    border: 1px solid black;
     position: relative;
 }
 
