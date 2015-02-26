@@ -15,6 +15,7 @@ $(document).ready(function() {
     $('#button').click(function(){
     var toAdd = $('#checkListEntry').val();
     $('#list').prepend('<li class="item">' + toAdd + '</li>');
+    $('#checkListEntry').val('');
     })
     
     
