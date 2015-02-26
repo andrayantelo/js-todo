@@ -1,5 +1,9 @@
 $(document).ready(function() {
     
+    $(function() {
+      $("#checkListEntry").focus();
+    })
+    
     $('#button').mouseenter(function() {
         $('#button').css('background-color','white');
         $('#button').css('color', '#3d1256');
