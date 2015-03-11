@@ -36,9 +36,16 @@ $(document).ready(function() {
     
     $('#list').sortable();
     
-    //if (typeof(Storage) !="undefined") {
-        // store
-       // local.
+    if (typeof(Storage) !="undefined") {
+      // store
+        self.storeItems;
+      //retrieve
+        self.retrieveItems;
+    }
+    
+    else {
+    document.getElementById("result").innerHTML = "Sorry, your browser does not support Web Storage...";
+     }
     
     
 });
@@ -73,7 +80,18 @@ var List = function () {
         }
         
     };
+    
+    self.storeItems = function() {
+        self.listItems.forEach( function(itemIndex, itemValue) {
+            localStorage.setItem(itemIndex, itemValue);
+           })
+        };
         
+    self.retrieveItems = function() {
+    self.listItems.forEach(function(itemIndex){
+        document.getElementById("list").innerHTML = localStorage.getItem(itemIndex);
+        })
+    }
 };
         
     
