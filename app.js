@@ -27,7 +27,7 @@ $(document).ready(function() {
     
     
     $(document).on('click', '.item', function() {
-        var toRemove = $('#list').index(this);
+        var toRemove = $('#list').index($(this));
         todoList.removeFromList(toRemove);
         todoList.generateListDiv($('#list'));
         
@@ -66,9 +66,12 @@ var List = function () {
     };
     
     self.removeFromList = function(item) {
-        if (item in self.listItems) {
-            self.listItems.remove(item);
-        };
+        var indexOfItem = self.listItems.indexOf(item);
+        console.log(indexOfItem);
+        if (indexOfItem != -1) {
+            self.listItems.splice(indexOfItem, 1);
+        }
+        
     };
         
 };
