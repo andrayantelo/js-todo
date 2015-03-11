@@ -1,5 +1,7 @@
 $(document).ready(function() {
     
+    var todoList = new List();
+    
     $(function() {
       $("#checkListEntry").focus();
     })
@@ -17,17 +19,25 @@ $(document).ready(function() {
     })
     
     $('#button').click(function(){
-    var toAdd = $('#checkListEntry').val();
-    $('#list').prepend('<li class="item">' + toAdd + '</li>');
-    $('#checkListEntry').val('');
+        var toAdd = $('#checkListEntry').val();
+        todoList.addToList(toAdd);
+        todoList.generateListDiv($('#list'));
+        $('#checkListEntry').val('');
     })
     
     
     $(document).on('click', '.item', function() {
-        $(this).remove();
+        var toRemove = $('#list').index(this);
+        todoList.removeFromList(toRemove);
+        todoList.generateListDiv($('#list'));
+        
     })
     
     $('#list').sortable();
+    
+    //if (typeof(Storage) !="undefined") {
+        // store
+       // local.
     
     
 });
@@ -48,6 +58,19 @@ var List = function () {
         return this.listItems;
     };
     
+    self.generateListDiv = function(listDiv) {
+        listDiv.empty();
+        self.listItems.forEach( function(toAdd) {
+            listDiv.prepend('<li class="item">' + toAdd + '</li>');
+        });
+    };
+    
+    self.removeFromList = function(item) {
+        if (item in self.listItems) {
+            self.listItems.remove(item);
+        };
+    };
+        
 };
         
     
