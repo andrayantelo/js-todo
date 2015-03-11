@@ -38,9 +38,9 @@ $(document).ready(function() {
     
     if (typeof(Storage) !="undefined") {
       // store
-        self.storeItems;
+        todoList.storeItems();
       //retrieve
-        self.retrieveItems;
+        todoList.retrieveItems();
     }
     
     else {
