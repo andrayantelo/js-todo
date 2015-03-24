@@ -23,6 +23,7 @@ $(document).ready(function() {
         todoList.addToList(toAdd);
         todoList.generateListDiv($('#list'));
         $('#checkListEntry').val('');
+        todoList.storeList();
     })
     
     
@@ -38,9 +39,9 @@ $(document).ready(function() {
     
     if (typeof(Storage) !="undefined") {
       // store
-        todoList.storeItems();
+        todoList.storeList();
       //retrieve
-        todoList.retrieveItems();
+        todoList.retrieveList();
     }
     
     else {
@@ -81,17 +82,15 @@ var List = function () {
         
     };
     
-    self.storeItems = function() {
-        self.listItems.forEach( function(itemIndex, itemValue) {
-            localStorage.setItem(itemIndex, itemValue);
-           })
+    self.storeList = function() {
+            var myList = JSON.stringify(self.listItems);
+            localStorage.setItem("myList", myList);
         };
         
-    self.retrieveItems = function() {
-    self.listItems.forEach(function(itemIndex){
-        document.getElementById("list").innerHTML = localStorage.getItem(itemIndex);
-        })
-    }
+    self.retrieveList = function() {
+        document.getElementById("list").innerHTML = localStorage.getItem("myList");
+        };
+
 };
         
     
