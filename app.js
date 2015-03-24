@@ -31,10 +31,16 @@ $(document).ready(function() {
        // console.log(toRemove);
         todoList.removeFromList(this.innerHTML);
         todoList.generateListDiv($('#list'));
+        todoList.storeList();
         
     })
     
     $('#list').sortable();
+    
+    if(localStorage.getItem('myList')) {
+        todoList.retrieveList();
+        todoList.generateListDiv($('#list'));
+    }
     
 //    if (typeof(Storage) !="undefined") {
       // store
@@ -59,15 +65,14 @@ var List = function () {
     self.addToList = function(item) {
         if (self.listItems.length === 0) {
             self.listItems[0] = item;
-            var todos = $(".list").html();
-            localStorage.setItem('todos', todos);
+            
         } else {
             self.listItems[self.listItems.length] = item;
-            var todos = $(".list").html();
-            localStorage.setItem('todos', todos);
+            
             
         }
-        return this.listItems;
+        //return this.listItems;
+        return false;
     };
     
     self.generateListDiv = function(listDiv) {
@@ -85,14 +90,14 @@ var List = function () {
         
     };
     
-   // self.storeList = function() {
-   //         var myList = JSON.stringify(self.listItems);
-   //         localStorage.setItem("myList", myList);
-   //     };
+    self.storeList = function() {
+            var myList = JSON.stringify(self.listItems);
+            localStorage.setItem("myList", myList);
+        };
         
-   // self.retrieveList = function() {
-   //     document.getElementById("list").innerHTML = localStorage.getItem("myList");
-   //     };
+    self.retrieveList = function() {
+        self.listItems = JSON.parse(localStorage.getItem("myList"));
+        };
 
 };
         
