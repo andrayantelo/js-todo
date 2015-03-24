@@ -23,7 +23,6 @@ $(document).ready(function() {
         todoList.addToList(toAdd);
         todoList.generateListDiv($('#list'));
         $('#checkListEntry').val('');
-        todoList.storeList();
     })
     
     
@@ -32,21 +31,27 @@ $(document).ready(function() {
        // console.log(toRemove);
         todoList.removeFromList(this.innerHTML);
         todoList.generateListDiv($('#list'));
+        todoList.storeList();
         
     })
     
     $('#list').sortable();
     
-    if (typeof(Storage) !="undefined") {
-      // store
-        todoList.storeList();
-      //retrieve
+    if(localStorage.getItem('myList')) {
         todoList.retrieveList();
+        todoList.generateListDiv($('#list'));
     }
     
-    else {
-    document.getElementById("result").innerHTML = "Sorry, your browser does not support Web Storage...";
-     }
+//    if (typeof(Storage) !="undefined") {
+      // store
+//        todoList.storeList();
+      //retrieve
+//        todoList.retrieveList();
+//    }
+    
+//    else {
+//    document.getElementById("result").innerHTML = "Sorry, your browser does not support Web Storage...";
+//     }
     
     
 });
@@ -60,11 +65,14 @@ var List = function () {
     self.addToList = function(item) {
         if (self.listItems.length === 0) {
             self.listItems[0] = item;
+            
         } else {
             self.listItems[self.listItems.length] = item;
             
+            
         }
-        return this.listItems;
+        //return this.listItems;
+        return false;
     };
     
     self.generateListDiv = function(listDiv) {
@@ -88,7 +96,7 @@ var List = function () {
         };
         
     self.retrieveList = function() {
-        document.getElementById("list").innerHTML = localStorage.getItem("myList");
+        self.listItems = JSON.parse(localStorage.getItem("myList"));
         };
 
 };
