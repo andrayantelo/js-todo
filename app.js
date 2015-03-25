@@ -23,7 +23,6 @@ $(document).ready(function() {
     $('#button').click(function(){
         var toAdd = $('#checkListEntry').val();
         todoList.addToList(toAdd);
-        todoList.storeList();
         todoList.generateListDiv($('#list'));
         $('#checkListEntry').val('');
     })
@@ -33,7 +32,6 @@ $(document).ready(function() {
        // var toRemove = $('#list').index(this);
        // console.log(toRemove);
         todoList.removeFromList(this.innerHTML);
-        todoList.storeList();
         todoList.generateListDiv($('#list'));
       
         
@@ -41,8 +39,7 @@ $(document).ready(function() {
     
     $('#list').sortable();
     
-    if(localStorage.getItem('myList')) {
-        todoList.retrieveList();
+    if (todoList.retrieveList()) {
         todoList.generateListDiv($('#list'));
     }
     
@@ -61,8 +58,10 @@ $(document).ready(function() {
 });
 
 
-var List = function () {
+var List = function (localStorageKey) {
     var self = this
+
+    self.localStorageKey = localStorageKey;
     
     self.listItems = [];
 
@@ -76,6 +75,7 @@ var List = function () {
             
         }
         //return this.listItems;
+        self.storeList();
         return false;
     };
     
@@ -91,20 +91,26 @@ var List = function () {
         if (indexOfItem != -1) {
             self.listItems.splice(indexOfItem, 1);
         }
-        
+        self.storeList();
     };
     
     self.storeList = function() {
             var myList = JSON.stringify(self.listItems);
-            localStorage.setItem("myList", myList);
+            localStorage.setItem(self.localStorageKey, myList);
         };
         
     self.retrieveList = function() {
-        self.listItems = JSON.parse(localStorage.getItem("myList"));
+        // Returns true if the list successfully loaded, otherwise false
+        var item = localStorage.getItem(self.localStorageKey);
+        if (item === undefined) {
+            return false;
+        }
+        self.listItems = JSON.parse(item);
+        return true;
         };
 
 };
         
     
 
-var todoList = new List();
+var todoList = new List('todoList');
