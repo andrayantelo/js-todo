@@ -1,6 +1,8 @@
+
+
 $(document).ready(function() {
     
-    var todoList = new List();
+    
     
     $(function() {
       $("#checkListEntry").focus();
@@ -102,4 +104,5 @@ var List = function () {
 };
         
     
-    
+
+var todoList = new List();
