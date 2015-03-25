@@ -23,7 +23,6 @@ $(document).ready(function() {
     $('#button').click(function(){
         var toAdd = $('#checkListEntry').val();
         todoList.addToList(toAdd);
-        todoList.storeList();
         todoList.generateListDiv($('#list'));
         $('#checkListEntry').val('');
     })
@@ -33,7 +32,6 @@ $(document).ready(function() {
        // var toRemove = $('#list').index(this);
        // console.log(toRemove);
         todoList.removeFromList(this.innerHTML);
-        todoList.storeList();
         todoList.generateListDiv($('#list'));
       
         
