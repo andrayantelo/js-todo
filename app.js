@@ -39,8 +39,7 @@ $(document).ready(function() {
     
     $('#list').sortable();
     
-    if(localStorage.getItem('myList')) {
-        todoList.retrieveList();
+    if (todoList.retrieveList()) {
         todoList.generateListDiv($('#list'));
     }
     
@@ -101,7 +100,13 @@ var List = function (localStorageKey) {
         };
         
     self.retrieveList = function() {
-        self.listItems = JSON.parse(localStorage.getItem(self.localStorageKey));
+        // Returns true if the list successfully loaded, otherwise false
+        var item = localStorage.getItem(self.localStorageKey);
+        if (item === undefined) {
+            return false;
+        }
+        self.listItems = JSON.parse(item);
+        return true;
         };
 
 };
