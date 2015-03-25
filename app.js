@@ -61,8 +61,10 @@ $(document).ready(function() {
 });
 
 
-var List = function () {
+var List = function (localStorageKey) {
     var self = this
+
+    self.localStorageKey = localStorageKey;
     
     self.listItems = [];
 
@@ -76,6 +78,7 @@ var List = function () {
             
         }
         //return this.listItems;
+        self.storeList();
         return false;
     };
     
@@ -91,20 +94,20 @@ var List = function () {
         if (indexOfItem != -1) {
             self.listItems.splice(indexOfItem, 1);
         }
-        
+        self.storeList();
     };
     
     self.storeList = function() {
             var myList = JSON.stringify(self.listItems);
-            localStorage.setItem("myList", myList);
+            localStorage.setItem(self.localStorageKey, myList);
         };
         
     self.retrieveList = function() {
-        self.listItems = JSON.parse(localStorage.getItem("myList"));
+        self.listItems = JSON.parse(localStorage.getItem(self.localStorageKey));
         };
 
 };
         
     
 
-var todoList = new List();
+var todoList = new List('todoList');
