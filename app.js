@@ -86,26 +86,38 @@ var List = function (localStorageKey) {
         }
         //return this.listItems;
         self.storeList();
+// run the storeList method
         return false;
     };
     
     self.generateListDiv = function(listDiv) {
+// empty the child nodes and content from the element 'listDiv' 
         listDiv.empty();
+//for each array element in listItems
         self.listItems.forEach( function(toAdd) {
+//add to the beginning of the element listDiv the element li with class
+// 'item' and with the value toAdd
             listDiv.prepend('<li class="item">' + toAdd + '</li>');
         });
     };
     
     self.removeFromList = function(item) {
+//get the index of the item
         var indexOfItem = self.listItems.indexOf(item);
+// if the item is not the last one in the list
         if (indexOfItem != -1) {
+// start at position indexofItem and remove 1 element of the list 
             self.listItems.splice(indexOfItem, 1);
         }
+//run storeList
         self.storeList();
     };
     
     self.storeList = function() {
+// convert a javascript value (self.listItems) to a JSON string
             var myList = JSON.stringify(self.listItems);
+// access the current domain's local Storage object and add a data item
+// (myList) to it
             localStorage.setItem(self.localStorageKey, myList);
         };
         
@@ -115,6 +127,7 @@ var List = function (localStorageKey) {
         if (item === undefined) {
             return false;
         }
+// 
         self.listItems = JSON.parse(item);
         return true;
         };
