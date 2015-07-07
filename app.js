@@ -127,8 +127,8 @@ var List = function (localStorageKey) {
         if (item === undefined) {
             return false;
         }
-//accounts for when there is nothing stored in localStorage
-        else if (item === nuil) {
+// to account for when storage is empy
+        else if (item === null) {
             return false;
         }
 // 
