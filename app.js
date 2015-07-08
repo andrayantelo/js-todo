@@ -32,7 +32,7 @@ something to be added before clicking */
         todoList.addToList(toAdd);
 // add this value to 
         todoList.generateListDiv($('#list'));
-        $('#checkListEntry').val('');
+        $('#input').find("form")[0].reset();    //empties input area
     })
     
     
