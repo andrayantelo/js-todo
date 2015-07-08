@@ -1,5 +1,5 @@
-// if comment is indented it means it is lines of code that have been
-//commented out. Otherwise they are just comments.
+/* if comment is indented it means it is lines of code that have been
+commented out. Otherwise they are just comments.*/
 
 $(document).ready(function() {
     
@@ -27,8 +27,8 @@ $(document).ready(function() {
     $('#button').click(function(){
 //when button is clicked
         var toAdd = $('#checkListEntry').val();
-//get the value of #checkListEntry, presumably someone typed
-//something to be added before clicking
+/*get the value of #checkListEntry, presumably someone typed
+something to be added before clicking */
         todoList.addToList(toAdd);
 // add this value to 
         todoList.generateListDiv($('#list'));
@@ -51,17 +51,17 @@ $(document).ready(function() {
         todoList.generateListDiv($('#list'));
     }
     
-//    if (typeof(Storage) !="undefined") {
+/*    if (typeof(Storage) !="undefined") {
       // store
-//        todoList.storeList();
+        todoList.storeList();
       //retrieve
-//        todoList.retrieveList();
-//    }
+        todoList.retrieveList();
+    }
     
-//    else {
-//    document.getElementById("result").innerHTML = "Sorry, your browser does not support Web Storage...";
-//     }
-    
+    else {
+    document.getElementById("result").innerHTML = "Sorry, your browser does not support Web Storage...";
+     }
+*/    
     
 });
 
@@ -77,8 +77,8 @@ var List = function (localStorageKey) {
 // if the list is empty then the first element will be 'item'
         if (self.listItems.length === 0) {
             self.listItems[0] = item;
-// if the list is not empty than item will be the nth item in
-// the list, where n is equal to the length of listItems    
+/* if the list is not empty than item will be the nth item in
+the list, where n is equal to the length of listItems   */
         } else {
             self.listItems[self.listItems.length] = item;
             
@@ -95,8 +95,8 @@ var List = function (localStorageKey) {
         listDiv.empty();
 //for each array element in listItems
         self.listItems.forEach( function(toAdd) {
-//add to the beginning of the element listDiv the element li with class
-// 'item' and with the value toAdd
+/*add to the beginning of the element listDiv the element li with class
+'item' and with the value toAdd */
             listDiv.prepend('<li class="item">' + toAdd + '</li>');
         });
     };
@@ -116,8 +116,8 @@ var List = function (localStorageKey) {
     self.storeList = function() {
 // convert a javascript value (self.listItems) to a JSON string
             var myList = JSON.stringify(self.listItems);
-// access the current domain's local Storage object and add a data item
-// (myList) to it
+/* access the current domain's local Storage object and add a data item
+(myList) to it */
             localStorage.setItem(self.localStorageKey, myList);
         };
         
@@ -139,12 +139,12 @@ var List = function (localStorageKey) {
 };
         
     
-// make a new List object called todoList with self.localStorageKey set
-// equal to 'todoList'
+/* make a new List object called todoList with self.localStorageKey set
+equal to 'todoList'*/
 var todoList = new List('todoList');
 
-//new object todoList has the following properties:
-// self.localStorageKey = todoList
-// self.listItems = []
-// and the following methods: addTolist, generateListDiv, removeFromList,
-// storeList, retrieveList
+/*new object todoList has the following properties:
+self.localStorageKey = todoList
+self.listItems = []
+and the following methods: addTolist, generateListDiv, removeFromList,
+storeList, retrieveList */
