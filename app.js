@@ -34,6 +34,12 @@ something to be added before clicking */
         todoList.generateListDiv($('#list'));
         $('#input').find("form")[0].reset();    //empties input area
     });
+
+//stores list when save button is clicked. has an alert for now.    
+    $('#saveButton').click(function(){
+        todoList.storeList();
+        alert("List saved");
+    });
     
     
     $(document).on('click', '.item', function() {
@@ -84,8 +90,12 @@ the list, where n is equal to the length of listItems   */
             
             
         }
-        //return this.listItems;
-        self.storeList();
+        //return this.listItems;  <-- why did I have this line? ***
+        
+        
+//******        self.storeList();  *** temporarily disable 
+
+
 // run the storeList method
         return false;
     };
@@ -110,7 +120,8 @@ the list, where n is equal to the length of listItems   */
             self.listItems.splice(indexOfItem, 1);
         }
 //run storeList
-        self.storeList();
+
+// *** temporarily disable        self.storeList();
     };
     
     self.storeList = function() {
