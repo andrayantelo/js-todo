@@ -91,12 +91,6 @@ the list, where n is equal to the length of listItems   */
             
         }
         //return this.listItems;  <-- why did I have this line? ***
-        
-        
-//******        self.storeList();  *** temporarily disable 
-
-
-// run the storeList method
         return false;
     };
     
@@ -119,9 +113,8 @@ the list, where n is equal to the length of listItems   */
 // start at position indexofItem and remove 1 element of the list 
             self.listItems.splice(indexOfItem, 1);
         }
-//run storeList
 
-// *** temporarily disable        self.storeList();
+
     };
     
     self.storeList = function() {
