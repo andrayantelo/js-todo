@@ -16,6 +16,7 @@ $(document).ready(function() {
         $(this).css('color', '#3d1256');
         $(this).css('border', 'solid');
         $(this).css('borderWidth', '1px');
+        $(this).css('padding', '5px');
     });
     $('.button').mouseleave(function() {
 // changes button back to normal css when mouse leaves
