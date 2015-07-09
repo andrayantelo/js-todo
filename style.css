@@ -36,7 +36,7 @@ body {
    
 }
     
-#button {
+.button {
     
     border-radius: 0px;
     background-color: #3d1256;
@@ -68,5 +68,4 @@ body {
     cursor: pointer;
     position: relative;
 }
-
 

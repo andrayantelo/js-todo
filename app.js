@@ -10,21 +10,21 @@ $(document).ready(function() {
       $("#checkListEntry").focus();
     })
     
-    $('#button').mouseenter(function() {
+    $('.button').mouseenter(function() {
 //changes css for the Add button when mouse hovers over it
-        $('#button').css('background-color','white');
-        $('#button').css('color', '#3d1256');
-        $('#button').css('border', 'solid');
-        $('#button').css('borderWidth', '1px');
+        $(this).css('background-color','white');
+        $(this).css('color', '#3d1256');
+        $(this).css('border', 'solid');
+        $(this).css('borderWidth', '1px');
     })
-    $('#button').mouseleave(function() {
+    $('.button').mouseleave(function() {
 // changes button back to normal css when mouse leaves
-        $('#button').css('background-color','#3d1256');
-        $('#button').css('color', 'white');
-        $('#button').css('border', 'none');
+        $(this).css('background-color','#3d1256');
+        $(this).css('color', 'white');
+        $(this).css('border', 'none');
     })
     
-    $('#button').click(function(){
+    $('#addButton').click(function(){
 //when button is clicked
         var toAdd = $('#checkListEntry').val();
 /*get the value of #checkListEntry, presumably someone typed
