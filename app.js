@@ -42,6 +42,18 @@ something to be added before clicking */
         alert("List saved");
     });
     
+    $('#clearButton').click(function() {
+        todoList.clearList();
+        todoList.generateListDiv($('#list'));
+        
+    });
+       
+    
+    
+    
+    
+    
+    
     
     $(document).on('click', '.item', function() {
        // var toRemove = $('#list').index(this);
@@ -114,8 +126,16 @@ the list, where n is equal to the length of listItems   */
 // start at position indexofItem and remove 1 element of the list 
             self.listItems.splice(indexOfItem, 1);
         }
+        self.storeList();
+        
 
 
+    };
+    
+    self.clearList = function() {
+        self.listItems = [];
+        self.storeList();
+        
     };
     
     self.storeList = function() {
