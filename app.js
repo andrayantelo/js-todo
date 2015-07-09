@@ -8,7 +8,7 @@ $(document).ready(function() {
     $(function() {
 //the textbox has the typing cursor in it ready to type
       $("#checkListEntry").focus();
-    })
+    });
     
     $('.button').mouseenter(function() {
 //changes css for the Add button when mouse hovers over it
@@ -16,13 +16,13 @@ $(document).ready(function() {
         $(this).css('color', '#3d1256');
         $(this).css('border', 'solid');
         $(this).css('borderWidth', '1px');
-    })
+    });
     $('.button').mouseleave(function() {
 // changes button back to normal css when mouse leaves
         $(this).css('background-color','#3d1256');
         $(this).css('color', 'white');
         $(this).css('border', 'none');
-    })
+    });
     
     $('#addButton').click(function(){
 //when button is clicked
@@ -33,7 +33,7 @@ something to be added before clicking */
 // add this value to 
         todoList.generateListDiv($('#list'));
         $('#input').find("form")[0].reset();    //empties input area
-    })
+    });
     
     
     $(document).on('click', '.item', function() {
@@ -43,7 +43,7 @@ something to be added before clicking */
         todoList.generateListDiv($('#list'));
       
         
-    })
+    });
     
     $('#list').sortable();
     
@@ -67,7 +67,7 @@ something to be added before clicking */
 
 
 var List = function (localStorageKey) {
-    var self = this
+    var self = this;
 
     self.localStorageKey = localStorageKey;
     

@@ -76,3 +76,8 @@ body {
   left: 0px;
   
 }
+
+#clearButton {
+  position: absolute;
+  left: 50px;
+}
