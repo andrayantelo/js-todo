@@ -69,3 +69,8 @@ body {
     position: relative;
 }
 
+#saveButton {
+/* nearest positioned ancestor is #input */
+  position: absolute;
+  left: -50px;
+}
