@@ -13,15 +13,26 @@
     <div id="input">
         <form name="checkListForm" action="" onsubmit="return false;">
             <input type="text" id="checkListEntry" placeholder="Type your text here!"/>
-            <input id="button" type="submit" value="Add"/>
+            <input id="addButton" class="button" type="submit" value="Add"/>
+            <input id="saveButton" class="button" type="button" value="Save List"/>
+            <input id="clearButton" class="button" type="button" value="Clear List"/>
         </form>
     </div>
     
+ <!--   <div class="nav">
+        <div id="saveButton" class="button">Save</div>
+    </div>
+ -->   
 
     </br>
 </div>
     <div class="list">
-    <ol id="list"></ol>
+          
+    <ol id="list">
+    
+    <!-- '<li class="item">' + toAdd + '</li>' -->
+    
+    </ol>
     </div>
   
 <!-- <div class="inner"></div> -->

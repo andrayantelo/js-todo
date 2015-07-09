@@ -27,14 +27,16 @@ body {
 
 #input {
     position: relative;
+    
 }
 
 #input form[name="checkListForm"] #checkListEntry {
     width: 400px;
+    
    
 }
     
-#button {
+.button {
     
     border-radius: 0px;
     background-color: #3d1256;
@@ -43,19 +45,21 @@ body {
     font-size: 18px;
     text-align: center;
     padding: 5px;
-    max-width: 50px;
     position: absolute;
     margin-top: 5px;
-    margin-left: 160px;
+/*    margin-left: 160px;    */
     cursor: pointer;
+    box-sizing: content-box;
 }
 
 .list {
     text-align: center;
     margin-top: 50px;
+    position: relative;
+    
 }
 
-.list .item {
+.item {
     width: 400px;
     background-color: white;
     margin-left: auto;
@@ -65,4 +69,17 @@ body {
     position: relative;
 }
 
+#addButton {
+  position: absolute;
+}
+#saveButton {
+/* nearest positioned ancestor is #input */
+  position: absolute;
+  left: 0px;
+  
+}
 
+#clearButton {
+  position: absolute;
+  left: 100px;
+}
