@@ -27,6 +27,7 @@ body {
 
 #input {
     position: relative;
+    display: inline-block;
     
 }
 
@@ -47,7 +48,6 @@ body {
     padding: 5px;
     position: absolute;
     margin-top: 5px;
-/*    margin-left: 160px;    */
     cursor: pointer;
     box-sizing: content-box;
 }

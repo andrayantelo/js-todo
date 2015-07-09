@@ -16,13 +16,14 @@ $(document).ready(function() {
         $(this).css('color', '#3d1256');
         $(this).css('border', 'solid');
         $(this).css('borderWidth', '1px');
-        $(this).css('padding', '5px');
+        
     });
     $('.button').mouseleave(function() {
 // changes button back to normal css when mouse leaves
         $(this).css('background-color','#3d1256');
         $(this).css('color', 'white');
         $(this).css('border', 'none');
+        $(this).css('borderWidth', '0px');
     });
     
     $('#addButton').click(function(){
