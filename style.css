@@ -45,11 +45,12 @@ body {
     font-size: 18px;
     text-align: center;
     padding: 5px;
-    max-width: 50px;
+   /* max-width: 50px; */
     position: absolute;
     margin-top: 5px;
-    margin-left: 160px;
+/*    margin-left: 160px;    */
     cursor: pointer;
+    box-sizing: content-box;
 }
 
 .list {
@@ -72,5 +73,6 @@ body {
 #saveButton {
 /* nearest positioned ancestor is #input */
   position: absolute;
-  left: -50px;
+  left: 0px;
+  
 }
