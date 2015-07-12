@@ -1,18 +1,31 @@
 /* first test for addToList */
 
+var item = 'item';
+var myList = new List('myList');
+var car = 'car';
+var itemList = ['item', 'car'];
+var book = 'book';
+
 
 test("addToList test", function() {
-    var item = 'item';
-    var myList = new List('myList');
+    expect(4);
+    
     myList.addToList(item);
     equal(myList.listItems[0], item);
     
-    var car = 'car';
     myList.addToList(car);
     equal(myList.listItems[1], car);
-    
- /* don't think you can do this for lists */
-    var itemList = ['item', 'car'];
+
     deepEqual(myList.listItems, ['item', 'car']);
     
+    equal(myList.addToList(book), false);
+    
 });
+
+console.log(myList.listItems);
+/*test("removeFromList test", function() {
+    myList.removeFromList(item);
+    deepEqual(myList.listItems, ['car', 'book']);
+});*/
+
+
