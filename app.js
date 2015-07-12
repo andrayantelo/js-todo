@@ -122,7 +122,7 @@ the list, where n is equal to the length of listItems   */
     self.removeFromList = function(item) {
 //get the index of the item
         var indexOfItem = self.listItems.indexOf(item);
-// if the item is not the last one in the list
+// if the item is not in the list
         if (indexOfItem != -1) {
 // start at position indexofItem and remove 1 element of the list 
             self.listItems.splice(indexOfItem, 1);

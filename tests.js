@@ -22,10 +22,13 @@ test("addToList test", function() {
     
 });
 
-console.log(myList.listItems);
-/*test("removeFromList test", function() {
+
+test("removeFromList test", function() {
+    myList.itemList = [item, car, book];
+    console.log(myList.itemList);
     myList.removeFromList(item);
+    console.log(myList.itemList);
     deepEqual(myList.listItems, ['car', 'book']);
-});*/
+});
 
 
