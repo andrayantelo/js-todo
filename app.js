@@ -92,6 +92,8 @@ var List = function (localStorageKey) {
     self.localStorageKey = localStorageKey;
     
     self.listItems = [];
+    
+    self.isOk = true;
 
     self.addToList = function(item) {
 // if the list is empty then the first element will be 'item'
@@ -104,8 +106,7 @@ the list, where n is equal to the length of listItems   */
             
             
         }
-        //return this.listItems;  <-- why did I have this line? ***
-        return false;
+        return self
     };
     
     self.generateListDiv = function(listDiv) {
@@ -122,14 +123,17 @@ the list, where n is equal to the length of listItems   */
     self.removeFromList = function(item) {
 //get the index of the item
         var indexOfItem = self.listItems.indexOf(item);
-// if the item is not in the list
+// if the item is in the list
         if (indexOfItem != -1) {
 // start at position indexofItem and remove 1 element of the list 
             self.listItems.splice(indexOfItem, 1);
             self.storeList();
+            return self;
         }
         else {
             console.log(item + " " + "not on list");
+            self.isOk = false;
+            return self;
         }
 
     };
@@ -137,6 +141,7 @@ the list, where n is equal to the length of listItems   */
     self.clearList = function() {
         self.listItems = [];
         self.storeList();
+        return self;
         
     };
     
@@ -146,22 +151,30 @@ the list, where n is equal to the length of listItems   */
 /* access the current domain's local Storage object and add a data item
 (myList) to it */
             localStorage.setItem(self.localStorageKey, myList);
-        };
-        
+            return self;
+    };
+    
+    
+// put a flag on the list instead of false false true
+    
+    
     self.retrieveList = function() {
 // Returns true if the list successfully loaded, otherwise false
         var item = localStorage.getItem(self.localStorageKey);
         if (item === undefined) {
-            return false;
+            self.isOk = false;
+            return self;
         }
 // to account for when storage is empy
         else if (item === null) {
-            return false;
+            self.isOk = false;
+            return self;
         }
 // 
         self.listItems = JSON.parse(item);
-        return true;
-        };
+        
+        return self;
+    };
 
 };
         

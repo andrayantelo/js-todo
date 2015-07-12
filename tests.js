@@ -28,6 +28,8 @@ test("removeFromList test", function() {
     myList.removeFromList('item');
     
     deepEqual(myList.listItems, ['car', 'book']);
+    
+    equal(myList.removeFromList('dog'), false);
 });
 
 
