@@ -126,10 +126,11 @@ the list, where n is equal to the length of listItems   */
         if (indexOfItem != -1) {
 // start at position indexofItem and remove 1 element of the list 
             self.listItems.splice(indexOfItem, 1);
+            self.storeList();
         }
-        self.storeList();
-        
-
+        else {
+            console.log(item + " " + "not on list");
+        }
 
     };
     

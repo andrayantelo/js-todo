@@ -3,7 +3,6 @@
 var item = 'item';
 var myList = new List('myList');
 var car = 'car';
-var itemList = ['item', 'car'];
 var book = 'book';
 
 
@@ -24,10 +23,10 @@ test("addToList test", function() {
 
 
 test("removeFromList test", function() {
-    myList.itemList = [item, car, book];
-    console.log(myList.itemList);
-    myList.removeFromList(item);
-    console.log(myList.itemList);
+    myList.listItems = [item, car, book];
+    
+    myList.removeFromList('item');
+    
     deepEqual(myList.listItems, ['car', 'book']);
 });
 
