@@ -33,6 +33,9 @@ test("removeFromList test", function() {
     equal(myList.isOk, false);
 });
 
-
+test("clearList test", function() {
+    myList.clearList();
+    deepEqual(myList.listItems, []);
+});
 
 
