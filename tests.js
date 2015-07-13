@@ -74,7 +74,14 @@ test("updateFlag test", function() {
 test("storeList test", function() {
     expect(1);
     localStorage.clear();
-    console.log(myList.listItems);
+    
     myList.storeList();
     equal(localStorage.length, 1);
+});
+
+test("retrieveList test", function() {
+    localStorage.clear();
+    myList.retrieveList();
+    equal(myList.isOk, false);
+    
 });
