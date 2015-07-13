@@ -104,94 +104,136 @@ var List = function (localStorageKey) {
     self.isOk = true;
 
     self.addToList = function(item) {
-    // if the list is empty then the first element will be 'item'
+        if (self.isOk) {
+        // if the list is empty then the first element will be 'item'
     
-        if (self.listItems.length === 0) {
-            self.listItems[0] = item;
+            if (self.listItems.length === 0) {
+                self.listItems[0] = item;
             
-    /* if the list is not empty than item will be the nth item in
-    the list, where n is equal to the length of listItems   */
+            /* if the list is not empty than item will be the nth item in
+            the list, where n is equal to the length of listItems   */
     
-        } else {
+            } 
+            else {
             self.listItems[self.listItems.length] = item;
             
             
+            }
+            return self
         }
-        return self
+        else {
+            console.log("self.isOk is false");
+        }
     };
     
     self.generateListDiv = function(listDiv) {
-    // empty the child nodes and content from the element 'listDiv' 
+        if (self.isOk) {
+            // empty the child nodes and content from the element 'listDiv' 
     
-        listDiv.empty();
-    //for each array element in listItems
+            listDiv.empty();
+            //for each array element in listItems
     
-        self.listItems.forEach( function(toAdd) {
-    /*add to the beginning of the element listDiv the element li with class
-    'item' and with the value toAdd */
+            self.listItems.forEach( function(toAdd) {
+            /*add to the beginning of the element listDiv the element li with class
+            'item' and with the value toAdd */
     
             listDiv.prepend('<li class="item">' + toAdd + '</li>');
-        });
+            });
+        }
+        else {
+            console.log("selfisOk is false");
+        }
     };
     
     self.removeFromList = function(item) {
-    //get the index of the item
+        if (self.isOk) {
+            //get the index of the item
     
-        var indexOfItem = self.listItems.indexOf(item);
-    // if the item is in the list
+            var indexOfItem = self.listItems.indexOf(item);
+            // if the item is in the list
     
-        if (indexOfItem != -1) {
-    // start at position indexofItem and remove 1 element of the list 
+            if (indexOfItem != -1) {
+            // start at position indexofItem and remove 1 element of the list 
     
-            self.listItems.splice(indexOfItem, 1);
-            self.storeList();
-            return self;
+                self.listItems.splice(indexOfItem, 1);
+                self.storeList();
+                return self;
+            }
+            else {
+                console.log(item + " " + "not on list");
+                self.isOk = false;
+                return self;
+            };
         }
         else {
-            console.log(item + " " + "not on list");
-            self.isOk = false;
-            return self;
+            console.log("selfisOk is false");
         }
 
     };
     
     self.clearList = function() {
-        self.listItems = [];
-        self.storeList();
-        return self;
-        
+        if (self.isOk) {
+            self.listItems = [];
+            self.storeList();
+            return self;
+        }
+        else {
+            console.log("selfisOk is false");
+        }
     };
     
     self.storeList = function() {
-    // convert a javascript value (self.listItems) to a JSON string
+        if (self.isOk) {
+        // convert a javascript value (self.listItems) to a JSON string
     
             var myList = JSON.stringify(self.listItems);
-    /* access the current domain's local Storage object and add a data item
-    (myList) to it */
+            /* access the current domain's local Storage object and add a data item
+            (myList) to it */
     
             localStorage.setItem(self.localStorageKey, myList);
             return self;
+        }
+        else {
+            console.log("selfisOk is false");
+        }
     };
     
     
     self.retrieveList = function() {
-    // Returns true if the list successfully loaded, otherwise false
+        if (self.isOk) {
+            // Returns true if the list successfully loaded, otherwise false
     
-        var item = localStorage.getItem(self.localStorageKey);
-        if (item === undefined) {
-            self.isOk = false;
-            return self;
-        }
-    // to account for when storage is empy
+            var item = localStorage.getItem(self.localStorageKey);
+            if (item === undefined) {
+                self.isOk = false;
+                return self;
+            }
+         // to account for when storage is empy
     
-        else if (item === null) {
-            self.isOk = false;
-            return self;
-        }
+            else if (item === null) {
+                 self.isOk = false;
+                 return self;
+            }
  
-        self.listItems = JSON.parse(item);
+            self.listItems = JSON.parse(item);
         
-        return self;
+            return self;
+         }
+         else {
+            console.log("selfisOk is false");
+        }
+    };
+    
+    self.updateFlag = function() {
+        if (self.isOk) {
+           self.isOk = false;
+           //console.log("isOk is now false");
+         }    
+        else if (!self.isOk) {    //should I write else if
+            self.isOk = true;
+            //console.log("isOk is now true");
+        }
+       
     };
 
 };

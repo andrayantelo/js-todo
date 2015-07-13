@@ -4,7 +4,8 @@ var item = 'item';
 var myList = new List('myList');
 var car = 'car';
 var book = 'book';
-
+myList.isOk = true;
+console.log("BEGINNING STATUS" + " " + myList.isOk)
 
 test("addToList test", function() {
     expect(4);
@@ -26,16 +27,33 @@ test("addToList test", function() {
 test("removeFromList test", function() {
     myList.listItems = [item, car, book];
     
+    console.log(typeof(myList));
     myList.removeFromList('item');
     
     deepEqual(myList.listItems, ['car', 'book']);
     myList.removeFromList('dog');
     equal(myList.isOk, false);
+    
+    
 });
 
 test("clearList test", function() {
+    myList.isOk = true;
     myList.clearList();
     deepEqual(myList.listItems, []);
 });
 
+test("updateFlag test", function() {
+     myList.isOk = true;
+     equal(myList.isOk, true);
+     myList.updateFlag();
+    
+     equal(myList.isOk, false);
+     
+     myList.updateFlag();
+     
+     
+     equal(myList.isOk, true);
+
+});
 
