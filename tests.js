@@ -59,15 +59,22 @@ test("updateFlag test", function() {
 
 
  test("generateListDiv test", function() {
-    expect(1);
+    expect(2);
     var divValue = $('#list').val();
     var divId = $('#list');
     
     equal(divValue, "");
-    myList.listItems = ['book'];
+    myList.listItems = ['book', 'car'];
     myList.generateListDiv(divId);
-    console.log(divId.has('li'));
- //   equal(divValue, '<li class="item"> + "book" + </li>');
+    var divChildren = divId.children().length;
+    equal(divChildren, 2);
     
 });
 
+test("storeList test", function() {
+    expect(1);
+    localStorage.clear();
+    console.log(myList.listItems);
+    myList.storeList();
+    equal(localStorage.length, 1);
+});
