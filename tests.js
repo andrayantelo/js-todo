@@ -57,3 +57,17 @@ test("updateFlag test", function() {
 
 });
 
+
+ test("generateListDiv test", function() {
+    expect(1);
+    var divValue = $('#list').val();
+    var divId = $('#list');
+    
+    equal(divValue, "");
+    myList.listItems = ['book'];
+    myList.generateListDiv(divId);
+    console.log(divId.has('li'));
+ //   equal(divValue, '<li class="item"> + "book" + </li>');
+    
+});
+
