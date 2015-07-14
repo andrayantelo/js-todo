@@ -73,11 +73,16 @@ $(document).ready(function() {
       
     });
     
-    $('#list').sortable();
+    $('#list').sortable({
+        cursor: "move",  
+        containment: "parent",
+        axis: "x"
+        });
     
-    if (todoList.retrieveList()) {
+        todoList.retrieveList()
+        todoList.isOk = true;
         todoList.generateListDiv($('#list'));
-    }
+    
     
 /*    if (typeof(Storage) !="undefined") {
       // store
@@ -104,48 +109,56 @@ var List = function (localStorageKey) {
     self.isOk = true;
 
     self.addToList = function(item) {
-        if (self.isOk) {
+        if (!self.isOk) {
+            console.log("Can not add to list");
+            return self;
+        }
+        
         // if the list is empty then the first element will be 'item'
     
-            if (self.listItems.length === 0) {
-                self.listItems[0] = item;
+        if (self.listItems.length === 0) {
+            self.listItems[0] = item;
             
-            /* if the list is not empty than item will be the nth item in
-            the list, where n is equal to the length of listItems   */
+        /* if the list is not empty than item will be the nth item in
+        the list, where n is equal to the length of listItems   */
     
-            } 
-            else {
-            self.listItems[self.listItems.length] = item;
-            
-            
-            }
-            return self
-        }
+        } 
         else {
-            console.log("self.isOk is false");
+        self.listItems[self.listItems.length] = item;
+            
+            
         }
+        return self;
+        
+        
     };
     
     self.generateListDiv = function(listDiv) {
-        if (self.isOk) {
-            // empty the child nodes and content from the element 'listDiv' 
-    
-            listDiv.empty();
-            //for each array element in listItems
-    
-            self.listItems.forEach( function(toAdd) {
-            /*add to the beginning of the element listDiv the element li with class
-            'item' and with the value toAdd */
-    
-            listDiv.prepend('<li class="item">' + toAdd + '</li>');
-            });
+        if(!self.isOk) {
+            console.log("Can not generate list div")
+            return self;
         }
-        else {
-            console.log("selfisOk is false");
-        }
+       
+        // empty the child nodes and content from the element 'listDiv' 
+    
+        listDiv.empty();
+        //for each array element in listItems
+    
+        self.listItems.forEach( function(toAdd) {
+        /*add to the beginning of the element listDiv the element li with class
+        'item' and with the value toAdd */
+    
+        listDiv.prepend('<li class="item">' + toAdd + '</li>');
+        return self;
+        });
+        
     };
     
     self.removeFromList = function(item) {
+        if (!self.isOk) {
+            console.log("Will not remove from list"); 
+            return self;
+        }
         if (self.isOk) {
             //get the index of the item
     
@@ -163,65 +176,70 @@ var List = function (localStorageKey) {
                 console.log(item + " " + "not on list");
                 self.isOk = false;
                 return self;
-            };
-        }
-        else {
-            console.log("selfisOk is false");
-        }
+                  };
+            }
+
 
     };
     
     self.clearList = function() {
-        if (self.isOk) {
-            self.listItems = [];
-            self.storeList();
+        if(!self.isOk) {
+            console.log("Unable to cleat list");
             return self;
         }
-        else {
-            console.log("selfisOk is false");
-        }
+        
+        self.listItems = [];
+        self.storeList();
+        return self;
+        
+        
     };
     
     self.storeList = function() {
-        if (self.isOk) {
-        // convert a javascript value (self.listItems) to a JSON string
-    
-            var myList = JSON.stringify(self.listItems);
-            /* access the current domain's local Storage object and add a data item
-            (myList) to it */
-    
-            localStorage.setItem(self.localStorageKey, myList);
+         if(!self.isOk) {
+            console.log("Unable to store list");
             return self;
         }
-        else {
-            console.log("selfisOk is false");
-        }
+        
+        
+        // convert a javascript value (self.listItems) to a JSON string
+    
+        var myList = JSON.stringify(self.listItems);
+        /* access the current domain's local Storage object and add a data item
+        (myList) to it */
+    
+        localStorage.setItem(self.localStorageKey, myList);
+        return self;
+        
+       
     };
     
     
     self.retrieveList = function() {
-        if (self.isOk) {
+        
             // Returns true if the list successfully loaded, otherwise false
-    
-            var item = localStorage.getItem(self.localStorageKey);
-            if (item === undefined) {
-                self.isOk = false;
-                return self;
-            }
+        if(!self.isOk) {
+            console.log("Unable to retrieve list");
+            return self;
+        }
+        
+        var item = localStorage.getItem(self.localStorageKey);
+        if (item === undefined) {
+            self.isOk = false;
+            return self;
+        }
          // to account for when storage is empy
     
-            else if (item === null) {
-                 self.isOk = false;
-                 return self;
-            }
- 
-            self.listItems = JSON.parse(item);
-        
-            return self;
-         }
-         else {
-            console.log("selfisOk is false");
+        else if (item === null) {
+                self.isOk = false;
+                return self;
         }
+ 
+        self.listItems = JSON.parse(item);
+        
+        return self;
+         
+         
     };
     
     self.updateFlag = function() {
