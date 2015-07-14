@@ -75,8 +75,7 @@ $(document).ready(function() {
     
     $('#list').sortable({
         cursor: "move",  
-        containment: "parent",
-        axis: "x"
+        placeholder: 'item-placeholder'
         });
     
         todoList.retrieveList()
