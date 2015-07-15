@@ -144,7 +144,7 @@ var List = function (localStorageKey) {
     
         listDiv.empty();
         //for each array element in listItems
-    
+        
         self.listItems.forEach( function(toAdd) {
         /*add to the beginning of the element listDiv the element li with class
         'item' and with the value toAdd */
@@ -254,6 +254,11 @@ var List = function (localStorageKey) {
         }
        
     };
+    
+    self.sortedID = function() {
+         var sortedIDs = $( "#list" ).sortable( "toArray" );
+         console.log(sortedIDs);
+    }
 
 };
         
