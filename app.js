@@ -73,10 +73,12 @@ $(document).ready(function() {
       
     });
     
-    $('#list').sortable({
-      //  cursor: "move",  
-        placeholder: 'item-placeholder'
+    
+        $('#list').sortable({
+        //  cursor: "move",  
+        placeholder: "mylist-placeholder"
         });
+
     
         todoList.retrieveList()
         todoList.isOk = true;
