@@ -74,7 +74,7 @@ $(document).ready(function() {
     });
     
     $('#list').sortable({
-        cursor: "move",  
+      //  cursor: "move",  
         placeholder: 'item-placeholder'
         });
     
