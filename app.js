@@ -63,7 +63,7 @@ $(document).ready(function() {
     
     
     
-    $(document).on('click', '.item', function() {
+    $(document).on('dblclick', '.item', function() {
         
        // var toRemove = $('#list').index(this);
        // console.log(toRemove);
@@ -75,14 +75,26 @@ $(document).ready(function() {
     
     
         $('#list').sortable({
-        //  cursor: "move",  
-        placeholder: "mylist-placeholder"
+        cursor: "move",  
+        placeholder: "mylist-placeholder",
+        delay: 200,
+        distance: 30,
+        update: function( event, ui ) {
+            var sorted = $( this ).sortable( "serialize", { key: "sort" } );
+            console.log(sorted);
+            localStorage['sorted'] = sorted ;
+            }
         });
+        
+        
+        
+
 
     
         todoList.retrieveList()
         todoList.isOk = true;
         todoList.generateListDiv($('#list'));
+        
     
     
 /*    if (typeof(Storage) !="undefined") {
@@ -255,10 +267,6 @@ var List = function (localStorageKey) {
        
     };
     
-    self.sortedID = function() {
-         var sortedIDs = $( "#list" ).sortable( "toArray" );
-         console.log(sortedIDs);
-    }
 
 };
         
