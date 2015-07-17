@@ -86,9 +86,10 @@ body {
     border-bottom: 1px solid rgba(120,120,120,.5);
     text-shadow: -1px -1px 0px rgba(0,0,0,.5);  */
     font-size: 1.1em;
-    cursor: pointer;
+    cursor: move;
     position: relative;
     color: #3d1256;
+    text-align:left;
 }
 
 #list:first-child {

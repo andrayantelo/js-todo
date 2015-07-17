@@ -74,17 +74,7 @@ $(document).ready(function() {
     });
     
     
-        $('#list').sortable({
-        cursor: "move",  
-        placeholder: "mylist-placeholder",
-        delay: 200,
-        distance: 30,
-        update: function( event, ui ) {
-            var sorted = $( this ).sortable( "serialize", { key: "sort" } );
-            console.log(sorted);
-            localStorage['sorted'] = sorted ;
-            }
-        });
+        
         
         
         
@@ -120,6 +110,28 @@ var List = function (localStorageKey) {
     self.listItems = [];
     
     self.isOk = true;
+    
+     self.storeOrder = function(listId) {
+         if (!self.isOk) {
+             console.log("can not store order");
+             return self;
+        }
+        
+        $(listId).children().uniqueId.end().sortable({
+        cursor: "move",  
+        placeholder: "mylist-placeholder",
+        delay: 100,
+        distance: 30,
+        update: function( event, ui ) {   //why do we have event, ui here?
+            var sorted = $( this ).sortable( "serialize");  
+            console.log(sorted);
+            localStorage.setItem('sorted', sorted);
+            return sorted
+            }
+        });
+    
+    self.retrieveOrder = function(storedList) {
+        localStorage.getItem(storedList);
 
     self.addToList = function(item) {
         if (!self.isOk) {
@@ -267,6 +279,7 @@ var List = function (localStorageKey) {
        
     };
     
+   
 
 };
         
