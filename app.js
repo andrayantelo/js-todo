@@ -111,27 +111,14 @@ var List = function (localStorageKey) {
     
     self.isOk = true;
     
-     self.storeOrder = function(listId) {
-         if (!self.isOk) {
-             console.log("can not store order");
-             return self;
-        }
-        
-        $(listId).children().uniqueId.end().sortable({
-        cursor: "move",  
-        placeholder: "mylist-placeholder",
-        delay: 100,
-        distance: 30,
-        update: function( event, ui ) {   //why do we have event, ui here?
-            var sorted = $( this ).sortable( "serialize");  
-            console.log(sorted);
-            localStorage.setItem('sorted', sorted);
-            return sorted
-            }
-        });
+    self.generateId = function(prefix, start) {
+        var i = start || 0;
+        return function() {
+            return prefix + i++;
+        };
     
-    self.retrieveOrder = function(storedList) {
-        localStorage.getItem(storedList);
+    self.id = self.generateId("item_", 1);
+    };
 
     self.addToList = function(item) {
         if (!self.isOk) {
@@ -293,3 +280,31 @@ self.localStorageKey = todoList
 self.listItems = []
 and the following methods: addTolist, generateListDiv, removeFromList,
 storeList, retrieveList */
+
+
+
+
+
+/*     self.storeOrder = function(listId) {
+         if (!self.isOk) {
+             console.log("can not store order");
+             return self;
+        }
+        
+        $(listId).children().uniqueId.end().sortable({
+        cursor: "move",  
+        placeholder: "mylist-placeholder",
+        delay: 100,
+        distance: 30,
+        update: function( event, ui ) {   //why do we have event, ui here?
+            var sorted = $( this ).sortable( "serialize");  
+            console.log(sorted);
+            localStorage.setItem('sorted', sorted);
+            return sorted
+            }
+        });
+    
+    self.retrieveOrder = function(storedList) {
+        localStorage.getItem(storedList);
+    }
+*/
