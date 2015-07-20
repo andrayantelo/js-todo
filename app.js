@@ -81,23 +81,13 @@ $(document).ready(function() {
 
 
     
- //       todoList.retrieveList()
+        todoList.retrieveList()
         todoList.isOk = true;
         todoList.generateListDiv($('#list'));
         
     
     
-/*    if (typeof(Storage) !="undefined") {
-      // store
-        todoList.storeList();
-      //retrieve
-        todoList.retrieveList();
-    }
-    
-    else {
-    document.getElementById("result").innerHTML = "Sorry, your browser does not support Web Storage...";
-     }
-*/    
+
     
 });
 
@@ -109,10 +99,12 @@ var List = function (localStorageKey) {
     
     self.listItems = [];
     
+    self.listOrder = {};
+    
     self.isOk = true;
     
     
-    };
+    
 
     self.addToList = function(item) {
         if (!self.isOk) {
@@ -120,32 +112,35 @@ var List = function (localStorageKey) {
             return self;
         }
         
-        self.generateId = function(prefix, start) {
+     /*   self.generateId = function(prefix, start) {
         var i = start || 0;
         return function() {
             return prefix + i++;
         };
     
-        self.id = self.generateId("item_", 0);
-// if the listItems object is empty then the first key:value
-// pair will be 
+        self.id = self.generateId("item_", 0);*/
+
     
        // if (jQuery.isEmptyObject(self.listItems)) {
-        self.listItems.item_i = item;
-            
-/* if the list is not empty than item will be the nth item in
-the list, where n is equal to the length of listItems   */
+       if (self.listItems.length === 0) {
+                self.listItems[0] = item;
     
-     /*   } 
+            } 
         else {
-        self.listItems[self.listItems.length] = item;
-        */    
+            self.listItems[self.listItems.length] = item;
+            }
+       
+       for (i = 0; i < self.listItems.length; i ++) {
+        self.listOrder.item_i = item;
+       };
             
-    //    }
+                   
+  
         return self;
         
         
     };
+
     
     self.generateListDiv = function(listDiv) {
         if(!self.isOk) {
@@ -219,7 +214,7 @@ the list, where n is equal to the length of listItems   */
         // convert a javascript value (self.listItems) to a JSON string
     
         var myList = JSON.stringify(self.listItems);
-        /* access the current domain's local Storage object and add a data item
+    /* access the current domain's local Storage object and add a data item
         (myList) to it */
     
         localStorage.setItem(self.localStorageKey, myList);
@@ -229,7 +224,7 @@ the list, where n is equal to the length of listItems   */
     };
     
     
-/*    self.retrieveList = function() {
+    self.retrieveList = function() {
         
             // Returns true if the list successfully loaded, otherwise false
         if(!self.isOk) {
@@ -254,7 +249,7 @@ the list, where n is equal to the length of listItems   */
         return self;
          
          
-    };     */
+    };     
     
     self.updateFlag = function() {
         if (self.isOk) {
@@ -270,11 +265,10 @@ the list, where n is equal to the length of listItems   */
     
    
 
-};
+}; 
         
     
-/* make a new List object called todoList with self.localStorageKey set
-equal to 'todoList'*/
+
 var todoList = new List('todoList');
 
 /*new object todoList has the following properties:
@@ -287,26 +281,3 @@ storeList, retrieveList */
 
 
 
-/*     self.storeOrder = function(listId) {
-         if (!self.isOk) {
-             console.log("can not store order");
-             return self;
-        }
-        
-        $(listId).children().uniqueId.end().sortable({
-        cursor: "move",  
-        placeholder: "mylist-placeholder",
-        delay: 100,
-        distance: 30,
-        update: function( event, ui ) {   //why do we have event, ui here?
-            var sorted = $( this ).sortable( "serialize");  
-            console.log(sorted);
-            localStorage.setItem('sorted', sorted);
-            return sorted
-            }
-        });
-    
-    self.retrieveOrder = function(storedList) {
-        localStorage.getItem(storedList);
-    }
-*/
