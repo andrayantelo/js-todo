@@ -97,9 +97,11 @@ var List = function (localStorageKey) {
 
     self.localStorageKey = localStorageKey;
     
-    self.listItems = [];
+    self.listItems = {};
     
-    self.listOrder = {};
+    self.listOrder = [];
+    
+    self.allItemsAdded = [];
     
     self.isOk = true;
     
@@ -123,7 +125,10 @@ var List = function (localStorageKey) {
        // if (jQuery.isEmptyObject(self.listItems)) {
        if (self.listItems.length === 0) {
                 self.listItems[0] = item;
-                self.generateId(item, 0);
+                self.allItemsAdded.push(item);
+                self.generateId(item, self.listItems.length);
+                
+                
                 
     
             } 
