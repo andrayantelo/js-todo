@@ -104,7 +104,12 @@ var List = function (localStorageKey) {
     self.isOk = true;
     
     
-    
+    self.generateId = function(prefix, start) {
+        var i = start || 0;
+        return function() {
+            return prefix + i++;
+        };
+    };
 
     self.addToList = function(item) {
         if (!self.isOk) {
@@ -112,29 +117,25 @@ var List = function (localStorageKey) {
             return self;
         }
         
-     /*   self.generateId = function(prefix, start) {
-        var i = start || 0;
-        return function() {
-            return prefix + i++;
-        };
-    
-        self.id = self.generateId("item_", 0);*/
+        /*self.id = self.generateId("item_", 0);*/
 
     
        // if (jQuery.isEmptyObject(self.listItems)) {
        if (self.listItems.length === 0) {
                 self.listItems[0] = item;
+                self.generateId(item, 0);
+                
     
             } 
         else {
             self.listItems[self.listItems.length] = item;
             }
        
-       for (i = 0; i < self.listItems.length; i ++) {
+ /*      for (i = 0; i < self.listItems.length; i ++) {
         self.listOrder.item_i = item;
        };
             
-                   
+ */                  
   
         return self;
         
