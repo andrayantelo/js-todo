@@ -81,7 +81,7 @@ $(document).ready(function() {
 
 
     
-        todoList.retrieveList()
+ //       todoList.retrieveList()
         todoList.isOk = true;
         todoList.generateListDiv($('#list'));
         
@@ -111,13 +111,7 @@ var List = function (localStorageKey) {
     
     self.isOk = true;
     
-    self.generateId = function(prefix, start) {
-        var i = start || 0;
-        return function() {
-            return prefix + i++;
-        };
     
-    self.id = self.generateId("item_", 1);
     };
 
     self.addToList = function(item) {
@@ -126,20 +120,28 @@ var List = function (localStorageKey) {
             return self;
         }
         
-        // if the list is empty then the first element will be 'item'
+        self.generateId = function(prefix, start) {
+        var i = start || 0;
+        return function() {
+            return prefix + i++;
+        };
     
-        if (self.listItems.length === 0) {
-            self.listItems[0] = item;
+        self.id = self.generateId("item_", 0);
+// if the listItems object is empty then the first key:value
+// pair will be 
+    
+       // if (jQuery.isEmptyObject(self.listItems)) {
+        self.listItems.item_i = item;
             
-        /* if the list is not empty than item will be the nth item in
-        the list, where n is equal to the length of listItems   */
+/* if the list is not empty than item will be the nth item in
+the list, where n is equal to the length of listItems   */
     
-        } 
+     /*   } 
         else {
         self.listItems[self.listItems.length] = item;
+        */    
             
-            
-        }
+    //    }
         return self;
         
         
@@ -227,7 +229,7 @@ var List = function (localStorageKey) {
     };
     
     
-    self.retrieveList = function() {
+/*    self.retrieveList = function() {
         
             // Returns true if the list successfully loaded, otherwise false
         if(!self.isOk) {
@@ -252,7 +254,7 @@ var List = function (localStorageKey) {
         return self;
          
          
-    };
+    };     */
     
     self.updateFlag = function() {
         if (self.isOk) {
