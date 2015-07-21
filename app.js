@@ -101,46 +101,31 @@ var List = function (localStorageKey) {
     
     self.listOrder = [];
     
-    self.allItemsAdded = [];
+    self.itemsAdded = [];
     
     self.isOk = true;
     
+    self.itemCounter = JSON.parse(localStorage.getItem('counter')) || 0;
     
-    self.generateId = function(prefix, start) {
-        var i = start || 0;
-        return function() {
-            return prefix + i++;
-        };
+    self.generateId = function(prefix) {
+        var itemId = prefix + "-" + self.itemCounter;
+        self.itemCounter = self.itemCounter + 1
+        var myCounter = JSON.stringify(self.itemCounter);
+        localStorage.setItem('counter', myCounter);
+        return itemId;
     };
+
 
     self.addToList = function(item) {
         if (!self.isOk) {
             console.log("Can not add to list");
             return self;
         }
+    
+        self.itemsAdded.push(item);  //not sure I need this anymore
+        console.log(self.generateId(item));
         
-        /*self.id = self.generateId("item_", 0);*/
-
-    
-       // if (jQuery.isEmptyObject(self.listItems)) {
-       if (self.listItems.length === 0) {
-                self.listItems[0] = item;
-                self.allItemsAdded.push(item);
-                self.generateId(item, self.listItems.length);
-                
-                
-                
-    
-            } 
-        else {
-            self.listItems[self.listItems.length] = item;
-            }
-       
- /*      for (i = 0; i < self.listItems.length; i ++) {
-        self.listOrder.item_i = item;
-       };
-            
- */                  
+        
   
         return self;
         
@@ -159,7 +144,7 @@ var List = function (localStorageKey) {
         listDiv.empty();
         //for each array element in listItems
         
-        self.listItems.forEach( function(toAdd) {
+        self.itemsAdded.forEach( function(toAdd) {
         /*add to the beginning of the element listDiv the element li with class
         'item' and with the value toAdd */
     
