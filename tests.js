@@ -8,23 +8,25 @@ myList.isOk = true;
 console.log("BEGINNING STATUS" + " " + myList.isOk)
 
 test("addToList test", function() {
-    expect(4);
+//    expect(5);
     
     myList.addToList(item);
-    console.log(myList.listItems);
-    equal(myList.listItems[0], item);
+    equal(myList.itemsAdded[0], item);
+    equal(myList.listItems["item-0"], "item");
     
     myList.addToList(car);
-    equal(myList.listItems[1], car);
+    equal(myList.itemsAdded[1], car);
 
-    deepEqual(myList.listItems, ['item', 'car']);
+    deepEqual(myList.itemsAdded, ['item', 'car']);
     myList.addToList(book)
     equal(myList.isOk, true);
+    
+    localStorage.clear();
     
 });
 
 
-test("removeFromList test", function() {
+/*test("removeFromList test", function() {
     myList.listItems = [item, car, book];
     
     console.log(typeof(myList));
@@ -86,4 +88,4 @@ test("retrieveList test", function() {
     
 });
 
-
+*/

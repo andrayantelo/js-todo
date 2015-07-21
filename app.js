@@ -123,7 +123,8 @@ var List = function (localStorageKey) {
         }
     
         self.itemsAdded.push(item);  
-        self.listItems[self.generateId(item)] = item;
+        self.listItems[self.generateId("item")] = item;
+        
         self.listOrder = Object.keys(self.listItems);
         
         return self;
