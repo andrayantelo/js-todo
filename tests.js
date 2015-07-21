@@ -13,9 +13,12 @@ test("addToList test", function() {
     myList.addToList(item);
     equal(myList.itemsAdded[0], item);
     equal(myList.listItems["item-0"], "item");
+    equal(myList.listOrder[0], "item-0");
     
     myList.addToList(car);
     equal(myList.itemsAdded[1], car);
+    equal(myList.listItems["item-1"], "car");
+    equal(myList.listOrder[1], "item-1");
 
     deepEqual(myList.itemsAdded, ['item', 'car']);
     myList.addToList(book)
