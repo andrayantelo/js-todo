@@ -74,7 +74,8 @@ $(document).ready(function() {
     });
     
     
-        
+    $('#list').sortable({
+    });
         
         
         
@@ -123,7 +124,9 @@ var List = function (localStorageKey) {
         }
     
         self.itemsAdded.push(item);  
+        console.log(self.itemsAdded);
         self.listItems[self.generateId("item")] = item;
+        console.log(self.listItems);
         
         self.listOrder = Object.keys(self.listItems);
         
@@ -144,14 +147,11 @@ var List = function (localStorageKey) {
         listDiv.empty();
         //for each array element in listItems
         
-        self.itemsAdded.forEach( function(toAdd) {
-        /*add to the beginning of the element listDiv the element li with class
-        'item' and with the value toAdd */
-    
-        listDiv.prepend('<li class="item">' + toAdd + '</li>');
+        self.listOrder.forEach( function(itemKey) {
+        
+        listDiv.prepend('<li class=' + itemKey + '>' + self.listItems[itemKey] + '</li>');
         return self;
         });
-        
     };
     
     self.removeFromList = function(item) {
@@ -162,13 +162,14 @@ var List = function (localStorageKey) {
         if (self.isOk) {
             //get the index of the item
     
-            var indexOfItem = self.listItems.indexOf(item);
+            var indexOfItem = self.itemsAdded.indexOf(item);
             // if the item is in the list
     
             if (indexOfItem != -1) {
             // start at position indexofItem and remove 1 element of the list 
     
-                self.listItems.splice(indexOfItem, 1);
+                self.itemsAdded.splice(indexOfItem, 1);
+                
                 self.storeList();
                 return self;
             }
@@ -204,7 +205,7 @@ var List = function (localStorageKey) {
         
         // convert a javascript value (self.listItems) to a JSON string
     
-        var myList = JSON.stringify(self.listItems);
+        var myList = JSON.stringify(self.itemsAdded);
     /* access the current domain's local Storage object and add a data item
         (myList) to it */
     
@@ -235,7 +236,7 @@ var List = function (localStorageKey) {
                 return self;
         }
  
-        self.listItems = JSON.parse(item);
+     //   self.listItems = JSON.parse(item);      commented out for now <-----------
         
         return self;
          
