@@ -63,10 +63,12 @@ $(document).ready(function() {
     
     
     // CURRENT LINE
-    $(document).on('dblclick', $('#list').children(), function() {
+    $('#list').dblclick( function() {
         
        // var toRemove = $('#list').index(this);
        // console.log(toRemove);
+        console.log("double clicking did something");
+        console.log("double clicking did something");
         console.log(this);
         todoList.removeFromList(this.innerHTML);
         todoList.generateListDiv($('#list'));
@@ -124,13 +126,13 @@ var List = function (localStorageKey) {
         }
     
         self.itemsAdded.push(item);  
-        console.log(self.itemsAdded);
-        self.listItems[self.generateId("item")] = item;
+        var uniqueId = self.generateId("item");
+        self.listItems[uniqueId] = item;
         console.log(self.listItems);
-        
+       
         self.listOrder = Object.keys(self.listItems);
         
-        return self;
+        return uniqueId;
         
         
     };
@@ -155,7 +157,7 @@ var List = function (localStorageKey) {
     };
     // A method to remove items specifically from listOrder
     
-    self.removeFromOrder = function(orderId) {
+/*    self.removeFromOrder = function(orderId) {
         if (!self.isOk) {
             console.log("Will not remove crom list Order");
             return self;
@@ -174,39 +176,34 @@ var List = function (localStorageKey) {
         }
         }
     };
-    
+*/    
     /* When I remove an item from the list I need to remove it's key from the listObject,
       remove the key and value from the listItems object, and remove the item from itemsAdded*/
       
-    self.removeFromList = function(item) {
+    self.removeFromList = function(uniqueId) {
         if (!self.isOk) {
             console.log("Will not remove from list"); 
             return self;
         }
-        if (self.isOk) {
-            //get the index of the item
-    
-            var indexOfItem = self.itemsAdded.indexOf(item);
-            // if the item is in the list
-    
-            if (indexOfItem != -1) {
-            // start at position indexofItem and remove 1 element of the list 
-    
-                self.itemsAdded.splice(indexOfItem, 1);
-                
-                self.storeList();
-                return self;
-            }
+      //  if (self.isOk) {
+        var indexOfOrderId = self.listOrder.indexOf(uniqueId);
+        if (indexOfOrderId != -1) {
+            self.listOrder.splice(indexOfOrderId, 1);
+            var uniqueIdValue = self.listItems[uniqueId];
+            console.log(uniqueIdValue + " this is the value");
+            delete self.listItems[uniqueId];
             
             
-            else {
-                console.log(item + " " + "not on list");
-                self.isOk = false;
-                return self;
-                  };
-            }
-
-
+            self.itemsAdded.splice(uniqueIdValue, 1);  // CURRENT LINE
+            console.log(self.listOrder + "remaining Ids")
+            console.log(self.listItems + "remaining keys and values")
+            console.log(self.itemsAdded + "remaining items")            
+        }
+        
+        else {
+            console.log("removeFromList failed");
+        }
+        
     };
     
     self.clearList = function() {
