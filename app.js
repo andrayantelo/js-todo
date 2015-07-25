@@ -94,27 +94,30 @@ $(document).ready(function() {
     
 });
 
+var emptyState = function() {
+        return {
+        items: {},
+        order: [],
+        added: [],
+        counter: 0
+        }
+    }
 
 var List = function (localStorageKey) {
     var self = this;
 
     self.localStorageKey = localStorageKey;
     
-    self.listItems = {};
-    
-    self.listOrder = [];
-    
-    self.itemsAdded = [];
-    
+    self.state = emptyState();
+        
     self.isOk = true;
     
-    self.itemCounter = JSON.parse(localStorage.getItem('counter')) || 0;
+  //  self.itemCounter = JSON.parse(localStorage.getItem('counter')) || 0;
     
     self.generateId = function(prefix) {
-        var itemId = prefix + "-" + self.itemCounter;
-        self.itemCounter = self.itemCounter + 1
-        var myCounter = JSON.stringify(self.itemCounter);
-        localStorage.setItem('counter', myCounter);
+        var itemId = prefix + "-" + self.state.counter;
+        self.state.counter = self.state.counter + 1
+        var myCounter = JSON.stringify(self.state.counter);
         return itemId;
     };
 
@@ -125,12 +128,13 @@ var List = function (localStorageKey) {
             return self;
         }
     
-        self.itemsAdded.push(item);  
+        self.state.added.push(item);  
         var uniqueId = self.generateId("item");
-        self.listItems[uniqueId] = item;
-        console.log(self.listItems);
+        self.state.items[uniqueId] = item;
+        console.log(self.state);
        
-        self.listOrder = Object.keys(self.listItems);
+        self.state.order = Object.keys(self.state.items);
+        
         
         return uniqueId;
         
@@ -149,9 +153,9 @@ var List = function (localStorageKey) {
         listDiv.empty();
         //for each array element in listItems
         
-        self.listOrder.forEach( function(itemKey) {
+        self.state.order.forEach( function(itemKey) {
         
-        listDiv.prepend('<li class = "item" id=' + itemKey + '>' + self.listItems[itemKey] + '</li>');
+        listDiv.prepend('<li class = "item" id=' + itemKey + '>' + self.state.items[itemKey] + '</li>');
         return self;
         });
     };
@@ -186,18 +190,18 @@ var List = function (localStorageKey) {
             return self;
         }
       //  if (self.isOk) {
-        var indexOfOrderId = self.listOrder.indexOf(uniqueId);
+        var indexOfOrderId = self.state.order.indexOf(uniqueId);
         if (indexOfOrderId != -1) {
-            self.listOrder.splice(indexOfOrderId, 1);
-            var uniqueIdValue = self.listItems[uniqueId];
+            self.state.order.splice(indexOfOrderId, 1);
+            var uniqueIdValue = self.state.items[uniqueId];
             console.log(uniqueIdValue + " this is the value");
-            delete self.listItems[uniqueId];
+            delete self.state.items[uniqueId];
             
             
-            self.itemsAdded.splice(uniqueIdValue, 1);  // CURRENT LINE
-            console.log(self.listOrder + "remaining Ids")
-            console.log(self.listItems + "remaining keys and values")
-            console.log(self.itemsAdded + "remaining items")            
+            self.state.added.splice(uniqueIdValue, 1);  
+            console.log(self.state + " current list state")
+            
+                    
         }
         
         else {
@@ -206,14 +210,16 @@ var List = function (localStorageKey) {
         
     };
     
+  
+    
     self.clearList = function() {
         if(!self.isOk) {
             console.log("Unable to cleat list");
             return self;
         }
         
-        self.listItems = [];
-        self.storeList();
+        self.state = emptyState();
+        
         return self;
         
         
@@ -227,12 +233,13 @@ var List = function (localStorageKey) {
         
         
         // convert a javascript value (self.listItems) to a JSON string
+        var stateString = JSON.stringify(self.state);
     
-        var myList = JSON.stringify(self.itemsAdded);
     /* access the current domain's local Storage object and add a data item
         (myList) to it */
     
-        localStorage.setItem(self.localStorageKey, myList);
+        localStorage.setItem(self.localStorageKey, stateString);
+        
         return self;
         
        
@@ -247,19 +254,21 @@ var List = function (localStorageKey) {
             return self;
         }
         
-        var item = localStorage.getItem(self.localStorageKey);
-        if (item === undefined) {
+        var stateString = localStorage.getItem(self.localStorageKey);
+        
+        
+        if (stateString === undefined) {
             self.isOk = false;
             return self;
         }
          // to account for when storage is empy
     
-        else if (item === null) {
+        else if (stateString === null) {
                 self.isOk = false;
                 return self;
         }
  
-     //   self.listItems = JSON.parse(item);      commented out for now <-----------
+        self.state = JSON.parse(stateString);      
         
         return self;
          
