@@ -62,15 +62,15 @@ $(document).ready(function() {
     
     
     
-    // CURRENT LINE
-    $('#list').dblclick( function() {
+    // CURRENT LINE 
+    $(document).on('dblclick', '.item', function() {
         
        // var toRemove = $('#list').index(this);
        // console.log(toRemove);
         console.log("double clicking did something");
-        console.log("double clicking did something");
-        console.log(this);
-        todoList.removeFromList(this.innerHTML);
+        
+        console.log(event.target.id + " this is the id");
+        todoList.removeFromList(event.target.id);
         todoList.generateListDiv($('#list'));
       
     });
@@ -151,7 +151,7 @@ var List = function (localStorageKey) {
         
         self.listOrder.forEach( function(itemKey) {
         
-        listDiv.prepend('<li class=' + itemKey + '>' + self.listItems[itemKey] + '</li>');
+        listDiv.prepend('<li class = "item" id=' + itemKey + '>' + self.listItems[itemKey] + '</li>');
         return self;
         });
     };
