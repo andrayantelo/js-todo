@@ -8,19 +8,19 @@ myList.isOk = true;
 console.log("BEGINNING STATUS" + " " + myList.isOk)
 
 test("addToList test", function() {
-//    expect(5);
+//    expect(8);
     
     myList.addToList(item);
-    equal(myList.itemsAdded[0], item);
-    equal(myList.listItems["item-0"], "item");
-    equal(myList.listOrder[0], "item-0");
+    equal(myList.state.added[0], item);
+    equal(myList.state.items["item-0"], "item");
+    equal(myList.state.order[0], "item-0");
     
     myList.addToList(car);
-    equal(myList.itemsAdded[1], car);
-    equal(myList.listItems["item-1"], "car");
-    equal(myList.listOrder[1], "item-1");
+    equal(myList.state.added[1], car);
+    equal(myList.state.items["item-1"], "car");
+    equal(myList.state.order[1], "item-1");
 
-    deepEqual(myList.itemsAdded, ['item', 'car']);
+    deepEqual(myList.state.added, ['item', 'car']);
     myList.addToList(book)
     equal(myList.isOk, true);
     
