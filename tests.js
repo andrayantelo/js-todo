@@ -8,7 +8,7 @@ myList.isOk = true;
 console.log("BEGINNING STATUS" + " " + myList.isOk)
 
 test("addToList test", function() {
-//    expect(8);
+//    expect(9);
     
     myList.addToList(item);
     equal(myList.state.added[0], item);
@@ -23,25 +23,31 @@ test("addToList test", function() {
     deepEqual(myList.state.added, ['item', 'car']);
     myList.addToList(book)
     equal(myList.isOk, true);
+    deepEqual(myList.state.added, ['item', 'car', 'book']);
     
     localStorage.clear();
     
 });
 
 
-/*test("removeFromList test", function() {
-    myList.listItems = [item, car, book];
-    
-    console.log(typeof(myList));
-    myList.removeFromList('item');
-    
-    deepEqual(myList.listItems, ['car', 'book']);
+test("removeFromList test", function() {
+    myList.state = emptyState();
+    console.log(myList.state);
+    myList.addToList(item);
+    myList.addToList(car);
+    myList.addToList(book);
+    myList.removeFromList('item-0');
+    deepEqual(myList.state.added, ['car', 'book']);
+    deepEqual(myList.state.order, ['item-1', 'item-2']);
+    equal(myList.state.items['item-1'], 'car');
     myList.removeFromList('dog');
     equal(myList.isOk, false);
-    
+    myList.isOk = true;
     
 });
 
+/*
+ 
 test("clearList test", function() {
     myList.isOk = true;
     myList.clearList();

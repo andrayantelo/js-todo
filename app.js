@@ -60,9 +60,6 @@ $(document).ready(function() {
     
     
     
-    
-    
-    // CURRENT LINE 
     $(document).on('dblclick', '.item', function() {
         
        // var toRemove = $('#list').index(this);
@@ -131,7 +128,7 @@ var List = function (localStorageKey) {
         self.state.added.push(item);  
         var uniqueId = self.generateId("item");
         self.state.items[uniqueId] = item;
-        console.log(self.state);
+        //console.log(self.state);
        
         self.state.order = Object.keys(self.state.items);
         
@@ -194,18 +191,17 @@ var List = function (localStorageKey) {
         if (indexOfOrderId != -1) {
             self.state.order.splice(indexOfOrderId, 1);
             var uniqueIdValue = self.state.items[uniqueId];
-            console.log(uniqueIdValue + " this is the value");
+            
             delete self.state.items[uniqueId];
             
             
-            self.state.added.splice(uniqueIdValue, 1);  
-            console.log(self.state + " current list state")
-            
+            self.state.added.splice(uniqueIdValue, 1);              
                     
         }
         
         else {
             console.log("removeFromList failed");
+            self.isOk = false;
         }
         
     };
