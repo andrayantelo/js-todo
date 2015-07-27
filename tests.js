@@ -7,23 +7,32 @@ var book = 'book';
 myList.isOk = true;
 console.log("BEGINNING STATUS" + " " + myList.isOk)
 
+test("generateId test", function() {
+    var testId = myList.generateId("test");
+    equal(testId, "test-0");
+    equal(myList.state.counter, 1);
+});
+
 test("addToList test", function() {
-//    expect(9);
-    
+//    expect(12);
+    myList.state = emptyState();
     myList.addToList(item);
     equal(myList.state.added[0], item);
     equal(myList.state.items["item-0"], "item");
     equal(myList.state.order[0], "item-0");
+    equal(myList.state.counter, 1);
     
     myList.addToList(car);
     equal(myList.state.added[1], car);
     equal(myList.state.items["item-1"], "car");
     equal(myList.state.order[1], "item-1");
+    equal(myList.state.counter, 2);
 
     deepEqual(myList.state.added, ['item', 'car']);
     myList.addToList(book)
     equal(myList.isOk, true);
     deepEqual(myList.state.added, ['item', 'car', 'book']);
+    equal(myList.state.counter, 3);
     
     localStorage.clear();
     
@@ -37,6 +46,7 @@ test("removeFromList test", function() {
     myList.addToList(car);
     myList.addToList(book);
     myList.removeFromList('item-0');
+    equal(myList.state.counter, 3);
     deepEqual(myList.state.added, ['car', 'book']);
     deepEqual(myList.state.order, ['item-1', 'item-2']);
     equal(myList.state.items['item-1'], 'car');
@@ -55,7 +65,7 @@ test("clearList test", function() {
     ok(jQuery.isEmptyObject(myList.state.items));
 });
 
-/*
+
 test("updateFlag test", function() {
      myList.isOk = true;
      equal(myList.isOk, true);
@@ -70,7 +80,7 @@ test("updateFlag test", function() {
 
 });
 
-
+/*
  test("generateListDiv test", function() {
     expect(2);
     var divValue = $('#list').val();

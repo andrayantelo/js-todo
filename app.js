@@ -156,30 +156,7 @@ var List = function (localStorageKey) {
         return self;
         });
     };
-    // A method to remove items specifically from listOrder
-    
-/*    self.removeFromOrder = function(orderId) {
-        if (!self.isOk) {
-            console.log("Will not remove crom list Order");
-            return self;
-        }
-        if (self.isOk) {
-            var indexOfOrderId = self.listOrder.indexOf(orderId);
-            if (indexOfOrderId != -1) {
-                self.listOrder.splice(indexOfOrderId, 1);
-                // self.storeList()
-                return self;
-            }
-        else {
-            console.log(orderId + " " + "not on Order list");
-            self.isOk = false;
-            return self;
-        }
-        }
-    };
-*/    
-    /* When I remove an item from the list I need to remove it's key from the listObject,
-      remove the key and value from the listItems object, and remove the item from itemsAdded*/
+   
       
     self.removeFromList = function(uniqueId) {
         if (!self.isOk) {
