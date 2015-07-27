@@ -19,13 +19,13 @@ test("addToList test", function() {
     myList.addToList(item);
     equal(myList.state.added[0], item);
     equal(myList.state.items["item-0"], "item");
-    equal(myList.state.order[0], "item-0");
+    equal(myList.state.order[0], "item-0");   // double check this sometime
     equal(myList.state.counter, 1);
     
     myList.addToList(car);
     equal(myList.state.added[1], car);
     equal(myList.state.items["item-1"], "car");
-    equal(myList.state.order[1], "item-1");
+    equal(myList.state.order[1], "item-0");
     equal(myList.state.counter, 2);
 
     deepEqual(myList.state.added, ['item', 'car']);
@@ -48,7 +48,7 @@ test("removeFromList test", function() {
     myList.removeFromList('item-0');
     equal(myList.state.counter, 3);
     deepEqual(myList.state.added, ['car', 'book']);
-    deepEqual(myList.state.order, ['item-1', 'item-2']);
+    deepEqual(myList.state.order, ['item-2', 'item-1']);
     equal(myList.state.items['item-1'], 'car');
     myList.removeFromList('dog');
     equal(myList.isOk, false);
