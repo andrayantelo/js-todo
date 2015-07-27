@@ -42,18 +42,20 @@ test("removeFromList test", function() {
     equal(myList.state.items['item-1'], 'car');
     myList.removeFromList('dog');
     equal(myList.isOk, false);
-    myList.isOk = true;
     
 });
 
-/*
+
  
 test("clearList test", function() {
     myList.isOk = true;
     myList.clearList();
-    deepEqual(myList.listItems, []);
+    deepEqual(myList.state.added, []);
+    deepEqual(myList.state.order, []);
+    ok(jQuery.isEmptyObject(myList.state.items));
 });
 
+/*
 test("updateFlag test", function() {
      myList.isOk = true;
      equal(myList.isOk, true);
