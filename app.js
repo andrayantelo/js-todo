@@ -140,7 +140,7 @@ var List = function (localStorageKey) {
         self.state.items[uniqueId] = item;
         //console.log(self.state);
        
-        self.state.order.push(uniqueId);
+        self.state.order.unshift(uniqueId);
         
         
         return uniqueId;
@@ -162,7 +162,7 @@ var List = function (localStorageKey) {
         
         self.state.order.forEach( function(itemKey) {
         
-        listDiv.prepend('<li class = "item" id=' + itemKey + '>' + self.state.items[itemKey] + '</li>');
+        listDiv.append('<li class = "item" id=' + itemKey + '>' + self.state.items[itemKey] + '</li>');
         return self;
         });
     };
