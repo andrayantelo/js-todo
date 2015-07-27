@@ -140,7 +140,7 @@ var List = function (localStorageKey) {
         self.state.items[uniqueId] = item;
         //console.log(self.state);
        
-        self.state.order = Object.keys(self.state.items);
+        self.state.order.push(uniqueId);
         
         
         return uniqueId;
