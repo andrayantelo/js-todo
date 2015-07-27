@@ -80,19 +80,21 @@ test("updateFlag test", function() {
 
 });
 
-/*
+
  test("generateListDiv test", function() {
-    expect(2);
+   // expect(2);
     var divValue = $('#list').val();
     var divId = $('#list');
     
     equal(divValue, "");
-    myList.listItems = ['book', 'car'];
+    myList.addToList(car);
+    myList.addToList(book);
     myList.generateListDiv(divId);
     var divChildren = divId.children().length;
     equal(divChildren, 2);
     
 });
+
 
 test("storeList test", function() {
     expect(1);
@@ -102,11 +104,14 @@ test("storeList test", function() {
     equal(localStorage.length, 1);
 });
 
+
 test("retrieveList test", function() {
+    expect(1);
     localStorage.clear();
     myList.retrieveList();
     equal(myList.isOk, false);
     
 });
 
-*/
+myList.state = emptyState();
+
