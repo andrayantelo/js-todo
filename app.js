@@ -74,8 +74,13 @@ $(document).ready(function() {
     
     
     $('#list').sortable({
+        update: function(event, ui) {
+			var sortedIds = $(this).sortable('toArray');
+            todoList.newOrder(sortedIds);
+			
+         }
     });
-        
+      
         
         
 
@@ -110,6 +115,11 @@ var List = function (localStorageKey) {
     self.isOk = true;
     
   //  self.itemCounter = JSON.parse(localStorage.getItem('counter')) || 0;
+  
+    self.newOrder = function(newSortedIds) {
+        self.state.order = newSortedIds;
+        console.log(self.state.order);
+    };
     
     self.generateId = function(prefix) {
         var itemId = prefix + "-" + self.state.counter;
