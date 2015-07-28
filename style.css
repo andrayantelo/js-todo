@@ -96,7 +96,7 @@ body {
 #list .item a:link {
     float: right;
     margin-right: 5px;
-    /*display: none; */ 
+    display: none;  
     text-decoration: none;
     color: red;
 }

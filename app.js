@@ -27,12 +27,15 @@ $(document).ready(function() {
         $(this).css('borderWidth', '0px');
     });
     
-    $('.item').mouseenter(function() {
-        $(this).fadeIn("slow");
-    });
- /*   function() {
-        $(this).fadeOut();
-    }); */
+   $('#list').delegate('li', 'mouseover mouseout', function(event) {
+       var $this = $(this).find('a');
+       
+       if(event.type === 'mouseover') {
+           $this.stop(true, true).fadeIn();
+       } else {
+           $this.stop(true, true).fadeOut();
+       }
+   });
     
     $('#addButton').click(function(){
     //when button is clicked
