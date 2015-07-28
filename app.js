@@ -70,14 +70,14 @@ $(document).ready(function() {
     
     
     
-    $(document).on('dblclick', '.item', function() {
+    $(document).on('click', 'a', function() {
         
        // var toRemove = $('#list').index(this);
        // console.log(toRemove);
         console.log("double clicking did something");
-        
-        console.log(event.target.id + " this is the id");
-        todoList.removeFromList(event.target.id);
+        var parentId = $(this).parent().attr("id");
+        console.log(parentId + " this is the id");
+        todoList.removeFromList(parentId);
         todoList.generateListDiv($('#list'));
       
     });
