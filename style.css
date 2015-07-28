@@ -92,18 +92,31 @@ body {
     text-align:left;
 }
 
+
+#list .item a:link {
+    float: right;
+    margin-right: 5px;
+    /*display: none; */ 
+    text-decoration: none;
+    color: red;
+}
+
+#list .item a:hover {
+    text-decoration: underline;
+}
+
 #list:first-child {
     border-top: 0px;
     margin-top: 60px;
 }
 
-.mylist-placeholder {
+/*.mylist-placeholder {
     border: 3px dashed #3d1256 ;
     height: 42px;
     width: 394px;
     background: #d9d9d9;
 }
-
+*/
 #addButton {
   position: absolute;
 }

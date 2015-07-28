@@ -27,6 +27,13 @@ $(document).ready(function() {
         $(this).css('borderWidth', '0px');
     });
     
+    $('.item').mouseenter(function() {
+        $(this).fadeIn("slow");
+    });
+ /*   function() {
+        $(this).fadeOut();
+    }); */
+    
     $('#addButton').click(function(){
     //when button is clicked
     
@@ -162,7 +169,7 @@ var List = function (localStorageKey) {
         
         self.state.order.forEach( function(itemKey) {
         
-        listDiv.append('<li class = "item" id=' + itemKey + '>' + self.state.items[itemKey] + '</li>');
+        listDiv.append('<li class = "item" id=' + itemKey + '>' + self.state.items[itemKey] + '<a href= "#">X</a></li>');
         return self;
         });
     };
