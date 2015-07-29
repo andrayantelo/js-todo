@@ -92,13 +92,13 @@ body {
     text-align:left;
 }
 
-
+#list .item a,
 #list .item a:link {
     float: right;
-    margin-right: 5px;
+/*    margin-right: 5px;   */
     display: none;  
     text-decoration: none;
-    color: red;
+    color: #f03;
 }
 
 #list .item a:hover {
