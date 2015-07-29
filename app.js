@@ -70,13 +70,10 @@ $(document).ready(function() {
     
     
     
-    $(document).on('click', 'a', function() {
-        
-       // var toRemove = $('#list').index(this);
-       // console.log(toRemove);
-        console.log("double clicking did something");
+    $('#list').on('click', 'a', function() {
+        console.log("clicking on x is doing something");
         var parentId = $(this).parent().attr("id");
-        console.log(parentId + " this is the id");
+        
         todoList.removeFromList(parentId);
         todoList.generateListDiv($('#list'));
       
@@ -207,7 +204,7 @@ var List = function (localStorageKey) {
     
     self.clearList = function() {
         if(!self.isOk) {
-            console.log("Unable to cleat list");
+            console.log("Unable to clear list");
             return self;
         }
         
@@ -218,12 +215,17 @@ var List = function (localStorageKey) {
         
     };
     
+    self.addSavedList = function(saveMenu, listName) {
+        saveMenu.append('<li><a href="#">' + listName + '</a></li>');
+    };
+    
     self.storeList = function() {
          if(!self.isOk) {
             console.log("Unable to store list");
             return self;
         }
         
+        var listName = prompt("Enter a name for your list.");
         
         // convert a javascript value (self.listItems) to a JSON string
         var stateString = JSON.stringify(self.state);
@@ -232,6 +234,9 @@ var List = function (localStorageKey) {
         (myList) to it */
     
         localStorage.setItem(self.localStorageKey, stateString);
+        
+        //add the list name to dropdown menu
+        self.addSavedList($('.dropdown-menu'), listName);
         
         return self;
         
