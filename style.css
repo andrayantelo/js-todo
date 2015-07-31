@@ -9,7 +9,7 @@ h1 {
 }
 
 body {
-    background-color: #f1f1f1;
+    background-color: #d9d9d9;
 
 }
 
@@ -59,16 +59,62 @@ body {
     
 }
 
-.item {
-    width: 400px;
-    background-color: white;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 10px;
-    cursor: pointer;
-    position: relative;
+#list {
+    margin: 50px auto;
+    -webkit-box-shadow: 10px 10px 12px -1px rgba(143,143,143,1);
+    -moz-box-shadow: 10px 10px 12px -1px rgba(143,143,143,1);
+    box-shadow: 10px 10px 12px -1px rgba(143,143,143,1);
+    list-style-type: none;  
+    padding: 0;
+    width: 400px; 
+    
 }
 
+.item {    
+  /*  width: 400px; */
+    background-color: #c0c0c0; 
+  /*  margin-left:0px; */
+   /* height: 45px; */
+    line-height: 48px; 
+    outline: 0;
+    padding: 0;
+    margin: 0;
+    background: rgb(192,192,192);
+    background: linear-gradient(to bottom, #FFFFFF 20%, #ECE9E6
+    100%);
+    font-size: 1.1em;
+    cursor: move;
+    position: relative;
+    color: #3d1256;
+    text-align:left;
+}
+
+#list .item a,
+#list .item a:link {
+    float: right;
+   /* margin-right: 5px;   */
+    display: none;  
+    text-decoration: none;
+    color: #f03;
+    line-height: 48px;
+}
+
+#list .item a:hover {
+    text-decoration: underline;
+}
+
+#list:first-child {
+    border-top: 0px;
+    margin-top: 60px;
+}
+
+/*.mylist-placeholder {
+    border: 3px dashed #3d1256 ;
+    height: 42px;
+    width: 394px;
+    background: #d9d9d9;
+}
+*/
 #addButton {
   position: absolute;
 }
@@ -83,3 +129,5 @@ body {
   position: absolute;
   left: 100px;
 }
+
+
