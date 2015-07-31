@@ -116,6 +116,7 @@ var emptyState = function() {
         items: {},
         order: [],
         added: [],
+        saved: [],
         counter: 0
         }
     }
@@ -131,7 +132,13 @@ var List = function (localStorageKey) {
     
   //  self.itemCounter = JSON.parse(localStorage.getItem('counter')) || 0;
   
+  //method that replaces state.order with new array of IDs
     self.newOrder = function(newSortedIds) {
+        if (!self.isOk) {
+            console.log("can not add new order of IDs");
+            return self
+        }
+        
         self.state.order = newSortedIds;
         console.log(self.state.order);
     };
@@ -173,7 +180,6 @@ var List = function (localStorageKey) {
         // empty the child nodes and content from the element 'listDiv' 
     
         listDiv.empty();
-        //for each array element in listItems
         
         self.state.order.forEach( function(itemKey) {
         
@@ -223,8 +229,12 @@ var List = function (localStorageKey) {
         
     };
     
-    self.addSavedList = function(saveMenu, listName) {
+    //separate method to add html so that a saved list's name appears in dropdown menu
+    self.addSavedList = function(saveMenu, savedList) {
+        
+        self.state.saved.forEach( function(listName) {
         saveMenu.append('<li class="dropdown-option"><a href="#">' + listName + '</a></li>');
+        })
     };
     
     self.storeList = function() {
@@ -243,8 +253,10 @@ var List = function (localStorageKey) {
     
         localStorage.setItem(listName, stateString);
         
-        //add the list name to dropdown menu
-        self.addSavedList($('.dropdown-menu'), listName);
+        //add the list name to saved lists array
+        self.state.saved.push(listName);
+        //add the saved list names to dropdown menu
+        self.addSavedList($('.dropdown-menu'), self.state.saved);
         
         return self;
         
