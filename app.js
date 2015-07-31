@@ -88,6 +88,14 @@ $(document).ready(function() {
          }
     });
       
+      
+    $('.dropdown-option').click( function() {
+        var loadList = this.textContent
+        console.log(loadList);
+        todoList.retrieveList(loadList);
+        todoList.generateListDiv($('#list'));
+        alert("this worked");
+    });
         
         
 
@@ -216,7 +224,7 @@ var List = function (localStorageKey) {
     };
     
     self.addSavedList = function(saveMenu, listName) {
-        saveMenu.append('<li><a href="#">' + listName + '</a></li>');
+        saveMenu.append('<li class="dropdown-option"><a href="#">' + listName + '</a></li>');
     };
     
     self.storeList = function() {
@@ -233,7 +241,7 @@ var List = function (localStorageKey) {
     /* access the current domain's local Storage object and add a data item
         (myList) to it */
     
-        localStorage.setItem(self.localStorageKey, stateString);
+        localStorage.setItem(listName, stateString);
         
         //add the list name to dropdown menu
         self.addSavedList($('.dropdown-menu'), listName);
@@ -244,7 +252,7 @@ var List = function (localStorageKey) {
     };
     
     
-    self.retrieveList = function() {
+    self.retrieveList = function(listName) {
         
             // Returns true if the list successfully loaded, otherwise false
         if(!self.isOk) {
@@ -252,7 +260,7 @@ var List = function (localStorageKey) {
             return self;
         }
         
-        var stateString = localStorage.getItem(self.localStorageKey);
+        var stateString = localStorage.getItem(listName);
         
         
         if (stateString === undefined) {
