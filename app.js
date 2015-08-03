@@ -3,12 +3,27 @@ $(document).ready(function() {
     
     
     
-    $(function() {
+    
     //the textbox has the typing cursor in it ready to type
     
-      $("#checkListEntry").focus();
+    $("#listTitle").focus();
+    
+    $('#listTitle').bind("keydown", function(e) {
+        if (e.which == 13)
+        {
+            e.preventDefault();
+            $('#checkListEntry').focus();
+        }
     });
     
+    $('#checkListEntry').bind("keydown", function(e) {
+        if (e.which == 13)
+        {
+            e.preventDefault();  
+            $('#addButton').click();
+            
+        }
+    });
     $('.button').mouseenter(function() {
     //changes css for the Add button when mouse hovers over it
     
@@ -111,13 +126,17 @@ $(document).ready(function() {
     
 });
 
+var mutipleLists = {
+}
+
 var emptyState = function() {
         return {
         items: {},
         order: [],
         added: [],
         counter: 0,
-        localStorageKey: ""
+        localStorageKey: "",
+        saved: []
         }
     }
 
@@ -243,7 +262,7 @@ var List = function (localStorageKey) {
             return self;
         }
         
-        var listName = prompt("Enter a name for your list.");
+        var listName = document.getElementById('listTitle').value;
         
         // convert a javascript value (self.listItems) to a JSON string
         var stateString = JSON.stringify(self.state);
