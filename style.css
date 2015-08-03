@@ -1,11 +1,20 @@
 h1 {
     font-family: 'Open Sans', sans-serif, Courier, Arial;
+    font-size: 200%;
     color: #9446fb;
     opacity: 0.5;
     margin-left: auto;
     margin-right: auto;
     text-align: center;
     text-shadow: 1px 1px 0px #271631
+}
+
+#titleInput {
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 20px;
+    text-align: center;
+    width: 600px;
 }
 
 body {

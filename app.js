@@ -116,15 +116,15 @@ var emptyState = function() {
         items: {},
         order: [],
         added: [],
-        saved: [],
-        counter: 0
+        counter: 0,
+        localStorageKey: ""
         }
     }
 
 var List = function (localStorageKey) {
     var self = this;
 
-    self.localStorageKey = localStorageKey;
+//    self.localStorageKey = localStorageKey;
     
     self.state = emptyState();
         
@@ -264,7 +264,7 @@ var List = function (localStorageKey) {
     };
     
     
-    self.retrieveList = function(listName) {
+    self.retrieveList = function() {
         
             // Returns true if the list successfully loaded, otherwise false
         if(!self.isOk) {
@@ -272,7 +272,7 @@ var List = function (localStorageKey) {
             return self;
         }
         
-        var stateString = localStorage.getItem(listName);
+        var stateString = localStorage.getItem(self.localStorageKey);
         
         
         if (stateString === undefined) {
