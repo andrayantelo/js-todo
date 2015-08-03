@@ -1,11 +1,20 @@
 h1 {
     font-family: 'Open Sans', sans-serif, Courier, Arial;
+    font-size: 200%;
     color: #9446fb;
     opacity: 0.5;
     margin-left: auto;
     margin-right: auto;
     text-align: center;
     text-shadow: 1px 1px 0px #271631
+}
+
+#titleInput {
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 20px;
+    text-align: center;
+    width: 600px;
 }
 
 body {
@@ -71,20 +80,17 @@ body {
 }
 
 .item {    
-    width: 400px;
+  /*  width: 400px; */
     background-color: #c0c0c0; 
-    margin-left:0px;
-    height: 45px;
-    line-height: 48px;
+  /*  margin-left:0px; */
+   /* height: 45px; */
+    line-height: 48px; 
     outline: 0;
     padding: 0;
     margin: 0;
     background: rgb(192,192,192);
     background: linear-gradient(to bottom, #FFFFFF 20%, #ECE9E6
     100%);
-/*    border-top: 1px solid rgba(250,250,250,.2); 
-    border-bottom: 1px solid rgba(120,120,120,.5);
-    text-shadow: -1px -1px 0px rgba(0,0,0,.5);  */
     font-size: 1.1em;
     cursor: move;
     position: relative;
@@ -95,10 +101,11 @@ body {
 #list .item a,
 #list .item a:link {
     float: right;
-/*    margin-right: 5px;   */
+   /* margin-right: 5px;   */
     display: none;  
     text-decoration: none;
     color: #f03;
+    line-height: 48px;
 }
 
 #list .item a:hover {

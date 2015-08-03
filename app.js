@@ -88,6 +88,14 @@ $(document).ready(function() {
          }
     });
       
+      
+    $('.dropdown-option').click( function() {
+        var loadList = this.textContent
+        console.log(loadList);
+        todoList.retrieveList(loadList);
+        todoList.generateListDiv($('#list'));
+        alert("this worked");
+    });
         
         
 
@@ -108,14 +116,15 @@ var emptyState = function() {
         items: {},
         order: [],
         added: [],
-        counter: 0
+        counter: 0,
+        localStorageKey: ""
         }
     }
 
 var List = function (localStorageKey) {
     var self = this;
 
-    self.localStorageKey = localStorageKey;
+//    self.localStorageKey = localStorageKey;
     
     self.state = emptyState();
         
@@ -123,7 +132,13 @@ var List = function (localStorageKey) {
     
   //  self.itemCounter = JSON.parse(localStorage.getItem('counter')) || 0;
   
+  //method that replaces state.order with new array of IDs
     self.newOrder = function(newSortedIds) {
+        if (!self.isOk) {
+            console.log("can not add new order of IDs");
+            return self
+        }
+        
         self.state.order = newSortedIds;
         console.log(self.state.order);
     };
@@ -165,7 +180,6 @@ var List = function (localStorageKey) {
         // empty the child nodes and content from the element 'listDiv' 
     
         listDiv.empty();
-        //for each array element in listItems
         
         self.state.order.forEach( function(itemKey) {
         
@@ -215,8 +229,12 @@ var List = function (localStorageKey) {
         
     };
     
-    self.addSavedList = function(saveMenu, listName) {
-        saveMenu.append('<li><a href="#">' + listName + '</a></li>');
+    //separate method to add html so that a saved list's name appears in dropdown menu
+    self.addSavedList = function(saveMenu, savedList) {
+        
+        self.state.saved.forEach( function(listName) {
+        saveMenu.append('<li class="dropdown-option"><a href="#">' + listName + '</a></li>');
+        })
     };
     
     self.storeList = function() {
@@ -233,10 +251,12 @@ var List = function (localStorageKey) {
     /* access the current domain's local Storage object and add a data item
         (myList) to it */
     
-        localStorage.setItem(self.localStorageKey, stateString);
+        localStorage.setItem(listName, stateString);
         
-        //add the list name to dropdown menu
-        self.addSavedList($('.dropdown-menu'), listName);
+        //add the list name to saved lists array
+        self.state.saved.push(listName);
+        //add the saved list names to dropdown menu
+        self.addSavedList($('.dropdown-menu'), self.state.saved);
         
         return self;
         
