@@ -1,16 +1,33 @@
 
 $(document).ready(function() {
     
-    
-    
-    $(function() {
-    //the textbox has the typing cursor in it ready to type
-    
-      $("#checkListEntry").focus();
+    $('#newListTab').mouseenter(function() {
+        $(this).toggleClass("active", true);
     });
     
+    $('#newListTab').mouseleave(function() {
+        $(this).toggleClass("active", false);
+    });
+
+    $("#listTitle").focus();
+    
+    $('#listTitle').bind("keydown", function(e) {
+        if (e.which == 13)
+        {
+            e.preventDefault();
+            $('#checkListEntry').focus();
+        }
+    });
+    
+    $('#checkListEntry').bind("keydown", function(e) {
+        if (e.which == 13)
+        {
+            e.preventDefault();  
+            $('#addButton').click();
+            
+        }
+    });
     $('.button').mouseenter(function() {
-    //changes css for the Add button when mouse hovers over it
     
         $(this).css('background-color','white');
         $(this).css('color', '#3d1256');
@@ -19,14 +36,14 @@ $(document).ready(function() {
         
     });
     $('.button').mouseleave(function() {
-    // changes button back to normal css when mouse leaves
     
         $(this).css('background-color','#3d1256');
         $(this).css('color', 'white');
         $(this).css('border', 'none');
         $(this).css('borderWidth', '0px');
     });
-    
+
+// makes the red x appear to remove a list item when mouse hovers over item    
    $('#list').delegate('li', 'mouseover mouseout', function(event) {
        var $this = $(this).find('a');
        
@@ -38,18 +55,12 @@ $(document).ready(function() {
    });
     
     $('#addButton').click(function(){
-    //when button is clicked
     
         var toAdd = $('#checkListEntry').val();
-        
-    /*get the value of #checkListEntry, presumably someone typed
-    something to be added before clicking */
     
         todoList.addToList(toAdd);
-        
-    // add this value to 
     
-        todoList.generateListDiv($('#list'));
+        todoList.generateListDiv($('#list'), $('#listTitle'));
         $('#input').find("form")[0].reset();    //empties input area
     });
 
@@ -61,8 +72,8 @@ $(document).ready(function() {
     });
     
     $('#clearButton').click(function() {
-        todoList.clearList();
-        todoList.generateListDiv($('#list'));
+        todoList.clearList($('#listTitle'));
+        todoList.generateListDiv($('#list'), $('#listTitle'));
         
     });
        
@@ -75,7 +86,7 @@ $(document).ready(function() {
         var parentId = $(this).parent().attr("id");
         
         todoList.removeFromList(parentId);
-        todoList.generateListDiv($('#list'));
+        todoList.generateListDiv($('#list'), $('#listTitle'));
       
     });
     
@@ -93,7 +104,7 @@ $(document).ready(function() {
         var loadList = this.textContent
         console.log(loadList);
         todoList.retrieveList(loadList);
-        todoList.generateListDiv($('#list'));
+        todoList.generateListDiv($('#list'), $('#listTitle'));
         alert("this worked");
     });
         
@@ -103,7 +114,7 @@ $(document).ready(function() {
     
         todoList.retrieveList()
         todoList.isOk = true;
-        todoList.generateListDiv($('#list'));
+        todoList.generateListDiv($('#list'), $('#listTitle'));
         
     
     
@@ -111,13 +122,17 @@ $(document).ready(function() {
     
 });
 
+var mutipleLists = {
+}
+
 var emptyState = function() {
         return {
         items: {},
         order: [],
         added: [],
         counter: 0,
-        localStorageKey: ""
+        localStorageKey: "",
+        saved: []
         }
     }
 
@@ -171,7 +186,7 @@ var List = function (localStorageKey) {
     };
 
     
-    self.generateListDiv = function(listDiv) {
+    self.generateListDiv = function(listDiv, titleBox) {
         if(!self.isOk) {
             console.log("Can not generate list div")
             return self;
@@ -180,6 +195,7 @@ var List = function (localStorageKey) {
         // empty the child nodes and content from the element 'listDiv' 
     
         listDiv.empty();
+        
         
         self.state.order.forEach( function(itemKey) {
         
@@ -216,13 +232,14 @@ var List = function (localStorageKey) {
     
   
     
-    self.clearList = function() {
+    self.clearList = function(titleBox) {
         if(!self.isOk) {
             console.log("Unable to clear list");
             return self;
         }
         
         self.state = emptyState();
+        titleBox.val('');
         
         return self;
         
@@ -243,7 +260,7 @@ var List = function (localStorageKey) {
             return self;
         }
         
-        var listName = prompt("Enter a name for your list.");
+        var listName = document.getElementById('listTitle').value;
         
         // convert a javascript value (self.listItems) to a JSON string
         var stateString = JSON.stringify(self.state);

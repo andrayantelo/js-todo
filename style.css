@@ -9,12 +9,22 @@ h1 {
     text-shadow: 1px 1px 0px #271631
 }
 
-#titleInput {
+#titleContainer {
     margin-left: auto;
     margin-right: auto;
     margin-bottom: 20px;
-    text-align: center;
     width: 600px;
+    text-align: center;
+
+}
+
+#listTitle {
+    border: none;
+    background: transparent;
+}
+
+#listTitle, #listTitle[placeholder]{
+    text-align:center;
 }
 
 body {
