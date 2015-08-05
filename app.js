@@ -1,8 +1,14 @@
 
 $(document).ready(function() {
     
-
+    $('#newListTab').mouseenter(function() {
+        $(this).toggleClass("active", true);
+    });
     
+    $('#newListTab').mouseleave(function() {
+        $(this).toggleClass("active", false);
+    });
+
     $("#listTitle").focus();
     
     $('#listTitle').bind("keydown", function(e) {
