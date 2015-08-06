@@ -44,14 +44,22 @@
 <h1 id = "mainheader">Make a List</h1></body>
 <div id="titleContainer">
     <input type="text" id="listTitle" placeholder="Type List Name">
+    
 </div>
 <div class="outer"> 
     <div id="input">
         <form name="checkListForm" action="" onsubmit="return false;">
             <input type="text" id="checkListEntry" placeholder="Type your text here!"/>
             <input id="addButton" class="button" type="submit" value="Add"/>
-            <input id="saveButton" class="button" type="button" value="Save List"/>
-            <input id="clearButton" class="button" type="button" value="Clear List"/>
+            <div id="saveButtonContainer">
+                <input id="saveButton" class="button" type="button" value="Save List"/>
+            </div>
+            <div id="clearButtonContainer">
+                <input id="clearButton" class="button" type="button" value="Clear List"/>
+            </div>
+            <div id="deleteButtonContainer">
+                <input id="deleteButton" class="button" type="button" value="Delete List"/>
+            </div>
         </form>
     </div>
 

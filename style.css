@@ -135,18 +135,24 @@ body {
 }
 */
 #addButton {
-  position: absolute;
+  position: relative;
+  margin-left: auto;
 }
-#saveButton {
+#saveButtonContainer {
 /* nearest positioned ancestor is #input */
   position: absolute;
-  left: 0px;
+  float: left;
   
 }
 
-#clearButton {
+#clearButtonContainer {
   position: absolute;
-  left: 100px;
+  
+}
+
+#deleteButtonContainer {
+  position: absolute;
+  
 }
 
 
