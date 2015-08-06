@@ -8,6 +8,12 @@ $(document).ready(function() {
     $('#newListTab').mouseleave(function() {
         $(this).toggleClass("active", false);
     });
+    
+    $('#newListTab').click(function() {
+        console.log("new list has been clicked");
+        todoList.clearList($('#listTitle'));
+        todoList.generateListDiv($('#list'), $('#listTitle'));
+    });
 
     $("#listTitle").focus();
     
@@ -123,7 +129,8 @@ $(document).ready(function() {
 });
 
 var mutipleLists = {
-}
+    savedLists = [];
+};
 
 var emptyState = function() {
         return {
@@ -139,7 +146,7 @@ var emptyState = function() {
 var List = function (localStorageKey) {
     var self = this;
 
-//    self.localStorageKey = localStorageKey;
+    self.localStorageKey = localStorageKey;
     
     self.state = emptyState();
         
@@ -254,19 +261,29 @@ var List = function (localStorageKey) {
         })
     };
     
-    self.storeList = function() {
+    self.storeList = function() {    //CURRENT LINE, CURRENT PROBLEM: NEED TO BE ABLE TO LOAD SPECIFIC LISTS, WHEN PAGE IS RELOADED FIRST SAVED LIST IS LOADED, NEED TO LOAD CURRENT
          if(!self.isOk) {
             console.log("Unable to store list");
             return self;
         }
         
-        var listName = document.getElementById('listTitle').value;
+        if (document.getElementById('listTitle').value) {
+            var listName = document.getElementById('listTitle').value;
+        }
         
-        // convert a javascript value (self.listItems) to a JSON string
+        else { 
+            var listName = self.localStorageKey; 
+        }
+        
+        self.state.localStorageKey = listName;
+        console.log(listName);
+        console.log(self.state.localStorageKey);
+        
+        // convert a javascript value (self.state) to a JSON string
         var stateString = JSON.stringify(self.state);
     
     /* access the current domain's local Storage object and add a data item
-        (myList) to it */
+        (stateString) to it */
     
         localStorage.setItem(listName, stateString);
         
@@ -289,7 +306,10 @@ var List = function (localStorageKey) {
             return self;
         }
         
-        var stateString = localStorage.getItem(self.localStorageKey);
+        if (!self.state.localStorageKey) {
+            var stateString = localStorage.getItem(self.localStorageKey);
+        }
+        else { var stateString = localStorage.getItem(self.state.localStorageKey)};
         
         
         if (stateString === undefined) {
