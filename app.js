@@ -129,7 +129,8 @@ $(document).ready(function() {
 });
 
 var mutipleLists = {
-}
+    savedLists = [];
+};
 
 var emptyState = function() {
         return {
