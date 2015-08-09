@@ -1,5 +1,26 @@
+/*function selectorCache() {
+    var collection = {};
+
+    function getFromCache( selector ) {
+        if ( undefined === collection[ selector ] ) {
+            collection[ selector ] = $( selector );
+        }
+
+        return collection[ selector ];
+    }
+
+    return { get: getFromCache };
+};
+
+var selectors = new selectorCache();
+*/
+
+// Usage $( '#element' ) becomes
+//selectors.get( '#element' );
+
 
 $(document).ready(function() {
+    
     
     $('#newListTab').mouseenter(function() {
         $(this).toggleClass("active", true);
@@ -129,6 +150,17 @@ $(document).ready(function() {
 
     
 });
+
+var storeInLocalStorage = function(storageItemName, storageItem) {        
+    
+        // convert a javascript value (storageItem) to a JSON string
+        var storageString = JSON.stringify(storageItem);
+    
+        /* access the current domain's local Storage object and add a data item
+        (storageString) to it */
+    
+        localStorage.setItem(storageItemName, storageString);
+};
 
 var multipleLists = {
     savedLists: []
@@ -295,28 +327,22 @@ var List = function (localStorageKey) {
         
         else { 
            /* var listName = self.localStorageKey; */
-           prompt("You must enter a list title");
-        }
+           var listName = prompt("You must enter a list title");
+           while (!listName) { 
+               var listName = prompt("You must enter a list title");
+               }
+           
+           }
         
         self.state.localStorageKey = listName;
-        console.log(listName);
-        console.log(self.state.localStorageKey);
-        
-        // convert a javascript value (self.state) to a JSON string
-        var stateString = JSON.stringify(self.state);
-    
-    /* access the current domain's local Storage object and add a data item
-        (stateString) to it */
-    
-        localStorage.setItem(listName, stateString);
+        storeInLocalStorage(self.state.localStorageKey, self.state);
         
         //add the list name to multipleLists.savedLists array
         multipleLists.savedLists.push(listName);
         console.log(multipleLists.savedLists);
         //add the saved list names to dropdown menu and store them in localstorage
         generateListMenu($('.dropdown-menu'));
-        var listMenuItems = JSON.stringify(multipleLists);
-        localStorage.setItem("allListNames", listMenuItems);
+        storeInLocalStorage("allListNames", multipleLists);
         
         return self;
         
