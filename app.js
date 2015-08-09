@@ -120,6 +120,7 @@ $(document).ready(function() {
     
       //  todoList.retrieveList()
         retrieveAllListNames();
+        generateListMenu();
         todoList.isOk = true;
         todoList.generateListDiv($('#list'), $('#listTitle'));
         
@@ -145,18 +146,18 @@ var retrieveAllListNames = function() {
         return [];
     }
  
-    multipleLists.savedLists = JSON.parse(allListNamesString);  
-    return multipleLists.savedLists;    
+    multipleLists = JSON.parse(allListNamesString);  
+    return multipleLists;    
     
 };
 
 
  //separate method to add html so that a saved list's name appears in dropdown menu
-var generateListMenu = function(saveMenu) {
-        
-    saveMenu.empty();
+var generateListMenu = function() {
+    console.log(multipleLists.savedLists);
+    $('.dropdown-menu').empty();
     multipleLists.savedLists.forEach( function(listName) {
-    saveMenu.append('<li class="dropdown-option"><a href="#">' + listName + '</a></li>');
+    $('.dropdown-menu').append('<li class="dropdown-option"><a href="#">' + listName + '</a></li>');
     })
 };
     
