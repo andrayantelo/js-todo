@@ -1,5 +1,26 @@
+/*function selectorCache() {
+    var collection = {};
+
+    function getFromCache( selector ) {
+        if ( undefined === collection[ selector ] ) {
+            collection[ selector ] = $( selector );
+        }
+
+        return collection[ selector ];
+    }
+
+    return { get: getFromCache };
+};
+
+var selectors = new selectorCache();
+*/
+
+// Usage $( '#element' ) becomes
+//selectors.get( '#element' );
+
 
 $(document).ready(function() {
+    
     
     $('#newListTab').mouseenter(function() {
         $(this).toggleClass("active", true);
@@ -118,7 +139,9 @@ $(document).ready(function() {
 
 
     
-        todoList.retrieveList()
+      //  todoList.retrieveList()
+        retrieveAllListNames();
+        generateListMenu();
         todoList.isOk = true;
         todoList.generateListDiv($('#list'), $('#listTitle'));
         
@@ -128,10 +151,48 @@ $(document).ready(function() {
     
 });
 
-var mutipleLists = {
-    savedLists = [];
+var storeInLocalStorage = function(storageItemName, storageItem) {        
+    
+        // convert a javascript value (storageItem) to a JSON string
+        var storageString = JSON.stringify(storageItem);
+    
+        /* access the current domain's local Storage object and add a data item
+        (storageString) to it */
+    
+        localStorage.setItem(storageItemName, storageString);
 };
 
+var multipleLists = {
+    savedLists: []
+};
+
+var retrieveAllListNames = function() {
+    var allListNamesString = localStorage.getItem("allListNames");
+    
+    if (allListNamesString === undefined) {
+        return [];
+    }
+         // to account for when storage is empy
+    
+    else if (allListNamesString === null) {
+        return [];
+    }
+ 
+    multipleLists = JSON.parse(allListNamesString);  
+    return multipleLists;    
+    
+};
+
+
+ //separate method to add html so that a saved list's name appears in dropdown menu
+var generateListMenu = function() {
+    console.log(multipleLists.savedLists);
+    $('.dropdown-menu').empty();
+    multipleLists.savedLists.forEach( function(listName) {
+    $('.dropdown-menu').append('<li class="dropdown-option"><a href="#">' + listName + '</a></li>');
+    })
+};
+    
 var emptyState = function() {
         return {
         items: {},
@@ -253,15 +314,8 @@ var List = function (localStorageKey) {
         
     };
     
-    //separate method to add html so that a saved list's name appears in dropdown menu
-    self.addSavedList = function(saveMenu, savedList) {
-        
-        self.state.saved.forEach( function(listName) {
-        saveMenu.append('<li class="dropdown-option"><a href="#">' + listName + '</a></li>');
-        })
-    };
-    
-    self.storeList = function() {    //CURRENT LINE, CURRENT PROBLEM: NEED TO BE ABLE TO LOAD SPECIFIC LISTS, WHEN PAGE IS RELOADED FIRST SAVED LIST IS LOADED, NEED TO LOAD CURRENT
+   
+    self.storeList = function() {    
          if(!self.isOk) {
             console.log("Unable to store list");
             return self;
@@ -272,25 +326,23 @@ var List = function (localStorageKey) {
         }
         
         else { 
-            var listName = self.localStorageKey; 
-        }
+           /* var listName = self.localStorageKey; */
+           var listName = prompt("You must enter a list title");
+           while (!listName) { 
+               var listName = prompt("You must enter a list title");
+               }
+           
+           }
         
         self.state.localStorageKey = listName;
-        console.log(listName);
-        console.log(self.state.localStorageKey);
+        storeInLocalStorage(self.state.localStorageKey, self.state);
         
-        // convert a javascript value (self.state) to a JSON string
-        var stateString = JSON.stringify(self.state);
-    
-    /* access the current domain's local Storage object and add a data item
-        (stateString) to it */
-    
-        localStorage.setItem(listName, stateString);
-        
-        //add the list name to saved lists array
-        self.state.saved.push(listName);
-        //add the saved list names to dropdown menu
-        self.addSavedList($('.dropdown-menu'), self.state.saved);
+        //add the list name to multipleLists.savedLists array
+        multipleLists.savedLists.push(listName);
+        console.log(multipleLists.savedLists);
+        //add the saved list names to dropdown menu and store them in localstorage
+        generateListMenu($('.dropdown-menu'));
+        storeInLocalStorage("allListNames", multipleLists);
         
         return self;
         
@@ -306,10 +358,8 @@ var List = function (localStorageKey) {
             return self;
         }
         
-        if (!self.state.localStorageKey) {
-            var stateString = localStorage.getItem(self.localStorageKey);
-        }
-        else { var stateString = localStorage.getItem(self.state.localStorageKey)};
+        
+        var stateString = localStorage.getItem(self.state.localStorageKey);
         
         
         if (stateString === undefined) {
@@ -349,13 +399,6 @@ var List = function (localStorageKey) {
     
 
 var todoList = new List('todoList');
-
-/*new object todoList has the following properties:
-self.localStorageKey = todoList
-self.listItems = []
-and the following methods: addTolist, generateListDiv, removeFromList,
-storeList, retrieveList */
-
 
 
 
