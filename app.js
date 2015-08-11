@@ -1,19 +1,19 @@
-/*function selectorCache() {
-    var collection = {};
+//function selectorCache() {
+//    var collection = {};
 
-    function getFromCache( selector ) {
-        if ( undefined === collection[ selector ] ) {
-            collection[ selector ] = $( selector );
-        }
+//   function getFromCache( selector ) {
+//        if ( undefined === collection[ selector ] ) {
+//            collection[ selector ] = $( selector );
+//        }
 
-        return collection[ selector ];
-    }
+//        return collection[ selector ];
+//    }
 
-    return { get: getFromCache };
-};
+//    return { get: getFromCache };
+//};
 
-var selectors = new selectorCache();
-*/
+//var selectors = new selectorCache();
+
 
 // Usage $( '#element' ) becomes
 //selectors.get( '#element' );
@@ -58,16 +58,11 @@ $(document).ready(function() {
     
         $(this).css('background-color','white');
         $(this).css('color', '#3d1256');
-        $(this).css('border', 'solid');
-        $(this).css('borderWidth', '1px');
-        
     });
     $('.button').mouseleave(function() {
     
         $(this).css('background-color','#3d1256');
         $(this).css('color', 'white');
-        $(this).css('border', 'none');
-        $(this).css('borderWidth', '0px');
     });
 
 // makes the red x appear to remove a list item when mouse hovers over item    
@@ -127,21 +122,22 @@ $(document).ready(function() {
     });
       
       
-    $('.dropdown-option').click( function() {
-        var loadList = this.textContent
-        console.log(loadList);
-        todoList.retrieveList(loadList);
-        todoList.generateListDiv($('#list'), $('#listTitle'));
-        alert("this worked");
-    });
+   // $('.dropdown-option').click( function() {
+   //     var loadList = this.textContent
+   //     console.log(loadList);
+   //     todoList.retrieveList(loadList);
+   //     todoList.generateListDiv($('#list'), $('#listTitle'));
+   //     alert("this worked");
+   // }); */
         
         
 
 
     
-      //  todoList.retrieveList()
-        retrieveAllListNames();
-        generateListMenu();
+        loadFromLocalStorage("allListNames", multipleLists);
+        console.log("on document loaded" + multipleLists.savedLists);
+        //retrieveAllListNames();
+        //generateListMenu();
         todoList.isOk = true;
         todoList.generateListDiv($('#list'), $('#listTitle'));
         
@@ -151,36 +147,40 @@ $(document).ready(function() {
     
 });
 
-var storeInLocalStorage = function(storageItemName, storageItem) {        
+var storeInLocalStorage = function(storageItemKey, storageItem) {        
     
         // convert a javascript value (storageItem) to a JSON string
         var storageString = JSON.stringify(storageItem);
+        console.log(storageString + "the item as a string");
     
-        /* access the current domain's local Storage object and add a data item
-        (storageString) to it */
+        // access the current domain's local Storage object and add a data item
+        //(storageString) to it 
     
-        localStorage.setItem(storageItemName, storageString);
+        localStorage.setItem(storageItemKey, storageString);
+};
+
+var loadFromLocalStorage = function(storageItemKey, storageItemString) {  // WHY ISN'T MY DROPDOWN MENU LOADING WHEN I REFRESH THE PAGE? WHY IS MULTIPLELISTS.SAVEDLISTS AN EMPTY ARRAY UPON REFRESH?
+                                                                    
+        var storageItem = localStorage.getItem(storageItemKey);
+        
+        
+        if (storageItem === undefined) {
+            console.log("Could not load, Key does not exist");
+        }
+         // to account for when storage is empy
+    
+        else if (storageItem === null) {
+            console.log("Could not load, key does not exist");
+        }
+ 
+        var storageItemString = JSON.parse(storageItem);  
+        
+        return storageItemString;
+         
 };
 
 var multipleLists = {
     savedLists: []
-};
-
-var retrieveAllListNames = function() {
-    var allListNamesString = localStorage.getItem("allListNames");
-    
-    if (allListNamesString === undefined) {
-        return [];
-    }
-         // to account for when storage is empy
-    
-    else if (allListNamesString === null) {
-        return [];
-    }
- 
-    multipleLists = JSON.parse(allListNamesString);  
-    return multipleLists;    
-    
 };
 
 
@@ -199,7 +199,7 @@ var emptyState = function() {
         order: [],
         added: [],
         counter: 0,
-        localStorageKey: "",
+        //localStorageKey: "",
         saved: []
         }
     }
@@ -326,7 +326,7 @@ var List = function (localStorageKey) {
         }
         
         else { 
-           /* var listName = self.localStorageKey; */
+           // var listName = self.localStorageKey; 
            var listName = prompt("You must enter a list title");
            while (!listName) { 
                var listName = prompt("You must enter a list title");
@@ -334,12 +334,12 @@ var List = function (localStorageKey) {
            
            }
         
-        self.state.localStorageKey = listName;
-        storeInLocalStorage(self.state.localStorageKey, self.state);
+        //self.state.localStorageKey = listName;
+        storeInLocalStorage(self.localStorageKey, self.state);
         
         //add the list name to multipleLists.savedLists array
-        multipleLists.savedLists.push(listName);
-        console.log(multipleLists.savedLists);
+        multipleLists.savedLists.push(listName);   //should I use self.state.localStorageKey here? can i not use listName anymore?
+        
         //add the saved list names to dropdown menu and store them in localstorage
         generateListMenu($('.dropdown-menu'));
         storeInLocalStorage("allListNames", multipleLists);
@@ -358,26 +358,9 @@ var List = function (localStorageKey) {
             return self;
         }
         
-        
-        var stateString = localStorage.getItem(self.state.localStorageKey);
-        
-        
-        if (stateString === undefined) {
-            self.isOk = false;
-            return self;
-        }
-         // to account for when storage is empy
-    
-        else if (stateString === null) {
-                self.isOk = false;
-                return self;
-        }
- 
-        self.state = JSON.parse(stateString);      
-        
+        loadFromLocalStorage(self.state.localStorageKey, self.state);
+        loadFromLocalStorage("allListNames", multipleLists);
         return self;
-         
-         
     };     
     
     self.updateFlag = function() {
