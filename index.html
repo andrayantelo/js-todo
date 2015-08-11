@@ -49,17 +49,26 @@
 </div>
 <div class="outer"> 
     <div id="input">
-        <form name="checkListForm" action="" onsubmit="return false;">
-            <input type="text" id="checkListEntry" placeholder="Type your text here!"/>
-            <input id="addButton" class="button" type="submit" value="Add"/>
-        </form>
-    <div id = "bottomButtons">
-        <input id="saveButton" class="button" type="button" value="Save List"/>
-        <input id="clearButton" class="button" type="button" value="Clear List"/>
-        <input id="deleteButton" class="button" type="button" value="Delete List"/>
+        <div id = "inputFormContainer">
+            <form name="checkListForm" action="" onsubmit="return false;">
+               <input type="text" id="checkListEntry" placeholder="Type your text here!"/>
+            </form>
+        </div>
+        <div id="addButtonContainer">
+                <input id="addButton" class="button" type="submit" value="Add"/>
+        </div>
     </div>
         
+    <div id = "bottomButtonsContainer">
+        <input id="saveButton" class="button" type="button" value="Save List"/>
+        
+        <input id="clearButton" class="button" type="button" value="Clear List"/>
+        
+        <input id="deleteButton" class="button" type="button" value="Delete List"/>
+        
     </div>
+        
+    
     </br>
 </div>
     <div class="list">
