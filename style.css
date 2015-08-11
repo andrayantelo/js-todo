@@ -20,14 +20,14 @@ h1 {
 
 #listTitle {
     border: none;
-    background: transparent;
+   /* background: transparent; */
 }
 
 #listTitle, #listTitle[placeholder]{
     text-align:center;
 }
 
-body {
+body, #input, #bottomButtons {
     background-color: #d9d9d9;
 
 }
@@ -58,13 +58,13 @@ body {
     
 .button {
     
-    border-radius: 0px;
+   /* border-radius: 0px; */
     background-color: #3d1256;
     color: white;
     font-family: 'Open Sans', sans-serif, Courier, Arial;
     font-size: 18px;
     text-align: center;
-    padding: 5px;
+    /* padding: 5px; */
     position: absolute;
     margin-top: 5px;
     cursor: pointer;
@@ -76,26 +76,30 @@ body {
   margin-left: auto;
 }
 
-#buttons {
-    position: relative
+
+#bottomButtons {
+    display: inline-block;
+    overflow: hidden;
+    width: 450px;
+
 }
 
 #saveButton {
 /* nearest positioned ancestor is #input */
-  position: absolute;
-  left: 0px;
+  position:relative;
+  float:left;
   
 }
 
 #clearButton {
-  position: absolute;
-  left: 105px;
+  position:relative;
+  float:left;
   
 }
 
 #deleteButton {
-  position: absolute;
-  right:135px;
+  position:relative;
+  float:left;
   
 }
 
