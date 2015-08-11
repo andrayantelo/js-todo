@@ -159,23 +159,25 @@ var storeInLocalStorage = function(storageItemKey, storageItem) {
         localStorage.setItem(storageItemKey, storageString);
 };
 
-var loadFromLocalStorage = function(storageItemKey, storageItemString) {  // WHY ISN'T MY DROPDOWN MENU LOADING WHEN I REFRESH THE PAGE? WHY IS MULTIPLELISTS.SAVEDLISTS AN EMPTY ARRAY UPON REFRESH?
+var loadFromLocalStorage = function(storageItemKey) {  // WHY ISN'T MY DROPDOWN MENU LOADING WHEN I REFRESH THE PAGE? WHY IS MULTIPLELISTS.SAVEDLISTS AN EMPTY ARRAY UPON REFRESH?
                                                                     
-        var storageItem = localStorage.getItem(storageItemKey);
+        var storageItem = localStorage.getItem(storageItemKey)
         
         
         if (storageItem === undefined) {
             console.log("Could not load, Key does not exist");
+            return 
         }
          // to account for when storage is empy
     
         else if (storageItem === null) {
             console.log("Could not load, key does not exist");
+            return 
         }
  
-        var storageItemString = JSON.parse(storageItem);  
+       var storageItem = JSON.parse(storageItem);  
         
-        return storageItemString;
+       return storageItem
          
 };
 
