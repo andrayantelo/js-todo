@@ -133,13 +133,13 @@ $(document).ready(function() {
         
 
 
-    
-        loadFromLocalStorage("allListNames", multipleLists);
-        console.log("on document loaded" + multipleLists.savedLists);
-        //retrieveAllListNames();
-        //generateListMenu();
+        //want to load the list names so that they appear in the dropdown menu
+        multipleLists = loadFromLocalStorage("allListNames", multipleLists);
+        console.log("on document loaded" +multipleLists.savedLists);
+        
+        generateListMenu();
         todoList.isOk = true;
-        todoList.generateListDiv($('#list'), $('#listTitle'));
+        //todoList.generateListDiv($('#list'), $('#listTitle'));
         
     
     
@@ -147,46 +147,47 @@ $(document).ready(function() {
     
 });
 
-var storeInLocalStorage = function(storageItemKey, storageItem) {        
-    
-        // convert a javascript value (storageItem) to a JSON string
-        var storageString = JSON.stringify(storageItem);
-        console.log(storageString + "the item as a string");
-    
-        // access the current domain's local Storage object and add a data item
-        //(storageString) to it 
-    
-        localStorage.setItem(storageItemKey, storageString);
-};
-
-var loadFromLocalStorage = function(storageItemKey, storageItemString) {  // WHY ISN'T MY DROPDOWN MENU LOADING WHEN I REFRESH THE PAGE? WHY IS MULTIPLELISTS.SAVEDLISTS AN EMPTY ARRAY UPON REFRESH?
-                                                                    
-        var storageItem = localStorage.getItem(storageItemKey);
-        
-        
-        if (storageItem === undefined) {
-            console.log("Could not load, Key does not exist");
-        }
-         // to account for when storage is empy
-    
-        else if (storageItem === null) {
-            console.log("Could not load, key does not exist");
-        }
- 
-        var storageItemString = JSON.parse(storageItem);  
-        
-        return storageItemString;
-         
-};
-
 var multipleLists = {
     savedLists: []
 };
 
+var storeInLocalStorage = function(storageItemKey, storageItem) {        
+    
+        // convert a javascript value (storageItem) to a JSON string
+        localStorage.setItem(storageItemKey, JSON.stringify(storageItem));
+    
+        // access the current domain's local Storage object and add a data item
+        //(storageString) to it 
+};
+
+var loadFromLocalStorage = function(storageItemKey, storageItem) {  // CURRENT LINE WHY ISN'T MY DROPDOWN MENU LOADING WHEN I REFRESH THE PAGE? WHY IS MULTIPLELISTS.SAVEDLISTS AN EMPTY ARRAY UPON REFRESH?
+        storageItem = localStorage.getItem(storageItemKey)
+        
+        
+        if (storageItem === undefined) {
+            console.log("Could not load, Key does not exist");
+            return multipleLists;
+                                                                                                                    
+         // to account for when storage is empy
+        }
+        else if (storageItem === null) {                                                            
+            console.log("Could not load, key does not exist");
+            return multipleLists;
+        }                                                                                                                           
+ 
+       storageItem = JSON.parse(storageItem);  
+       console.log(storageItem);
+        
+       return storageItem
+         
+};
+
+
+
 
  //separate method to add html so that a saved list's name appears in dropdown menu
 var generateListMenu = function() {
-    console.log(multipleLists.savedLists);
+    
     $('.dropdown-menu').empty();
     multipleLists.savedLists.forEach( function(listName) {
     $('.dropdown-menu').append('<li class="dropdown-option"><a href="#">' + listName + '</a></li>');
@@ -323,10 +324,10 @@ var List = function (localStorageKey) {
         
         if (document.getElementById('listTitle').value) {
             var listName = document.getElementById('listTitle').value;
+            console.log("this is the list name" + " " + listName);
         }
         
         else { 
-           // var listName = self.localStorageKey; 
            var listName = prompt("You must enter a list title");
            while (!listName) { 
                var listName = prompt("You must enter a list title");
@@ -339,7 +340,7 @@ var List = function (localStorageKey) {
         
         //add the list name to multipleLists.savedLists array
         multipleLists.savedLists.push(listName);   //should I use self.state.localStorageKey here? can i not use listName anymore?
-        
+        console.log("line 344" + " " + multipleLists);  // CURRENT LINE, FIGURING OUT IF LISTNAME ACTUALLY GETS ADDED TO SAVEDLISTS ARRAY AND IF SAVEDLISTS IS INDEED AN ARRAY
         //add the saved list names to dropdown menu and store them in localstorage
         generateListMenu($('.dropdown-menu'));
         storeInLocalStorage("allListNames", multipleLists);
