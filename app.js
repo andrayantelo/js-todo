@@ -90,6 +90,8 @@ $(document).ready(function() {
       
     $('#saveButton').click(function(){
         todoList.storeList();
+        todoLists.storeLists(todoList.state.localStorageKey, todoList.state.added);
+        todoLists.generateListMenu($('.dropdown-menu'));
         alert("List saved");
     });
     
@@ -122,24 +124,24 @@ $(document).ready(function() {
     });
       
       
-   // $('.dropdown-option').click( function() {
-   //     var loadList = this.textContent
-   //     console.log(loadList);
-   //     todoList.retrieveList(loadList);
-   //     todoList.generateListDiv($('#list'), $('#listTitle'));
-   //     alert("this worked");
-   // }); */
+//    $('.dropdown-option').click( function() {
+//        var loadList = this.textContent
+//        console.log(loadList);
+//        todoList.retrieveList(loadList);
+//        todoList.generateListDiv($('#list'), $('#listTitle'));
+//        alert("this worked");
+//    }); 
         
         
 
 
         //want to load the list names so that they appear in the dropdown menu
-        multipleLists = loadFromLocalStorage("allListNames", multipleLists);
-        console.log("on document loaded" +multipleLists.savedLists);
-        
-        generateListMenu();
+        //multipleLists = loadFromLocalStorage("allListNames", multipleLists);
+        //todoLists.retrieveLists();
+        todoLists.listsState = emptyMultipleListsState();  //temporary until I write retrieveLists method
+        todoLists.generateListMenu($('.dropdown-menu'));
         todoList.isOk = true;
-        //todoList.generateListDiv($('#list'), $('#listTitle'));
+        todoList.generateListDiv($('#list'), $('#listTitle'));
         
     
     
@@ -147,8 +149,15 @@ $(document).ready(function() {
     
 });
 
-var multipleLists = {
-    savedLists: []
+var updateFlag = function(isOk) {  // Never actually used this anywhere, utility function instead of List object method for now.
+        if (isOk) {
+           isOk = false;
+           //console.log("isOk is now false");
+         }    
+        else if (!isOk) {    //should I write else if
+            isOk = true;
+            //console.log("isOk is now true");
+        }
 };
 
 var storeInLocalStorage = function(storageItemKey, storageItem) {        
@@ -160,25 +169,25 @@ var storeInLocalStorage = function(storageItemKey, storageItem) {
         //(storageString) to it 
 };
 
-var loadFromLocalStorage = function(storageItemKey, storageItem) {  // CURRENT LINE WHY ISN'T MY DROPDOWN MENU LOADING WHEN I REFRESH THE PAGE? WHY IS MULTIPLELISTS.SAVEDLISTS AN EMPTY ARRAY UPON REFRESH?
-        storageItem = localStorage.getItem(storageItemKey)
+var loadFromLocalStorage = function(storageItemKey, storageItem) {  
+        loadItem = localStorage.getItem(storageItemKey)
         
         
         if (storageItem === undefined) {
             console.log("Could not load, Key does not exist");
-            return multipleLists;
+            return storageItem;   //DO I NEED TO RETURN ANYTHING HERE?
                                                                                                                     
          // to account for when storage is empy
         }
         else if (storageItem === null) {                                                            
             console.log("Could not load, key does not exist");
-            return multipleLists;
+            return storageItem;
         }                                                                                                                           
  
-       storageItem = JSON.parse(storageItem);  
-       console.log(storageItem);
+       storageItem = JSON.parse(loadItem);  
+       console.log(loadItem);
         
-       return storageItem
+       return loadItem
          
 };
 
@@ -186,31 +195,77 @@ var loadFromLocalStorage = function(storageItemKey, storageItem) {  // CURRENT L
 
 
  //separate method to add html so that a saved list's name appears in dropdown menu
-var generateListMenu = function() {
     
-    $('.dropdown-menu').empty();
-    multipleLists.savedLists.forEach( function(listName) {
-    $('.dropdown-menu').append('<li class="dropdown-option"><a href="#">' + listName + '</a></li>');
-    })
-};
-    
-var emptyState = function() {
+var emptyListState = function() {
         return {
         items: {},
         order: [],
         added: [],
         counter: 0,
-        //localStorageKey: "",
+        localStorageKey: "",
         saved: []
         }
+};
+    
+var emptyMultipleListsState = function() {
+    return {
+        savedNames: [],
+        savedLists: {},
+        
     }
+};
+    
+var multipleLists = function(localStorageKey) {
+    var self = this;
+    self.isOk = true;
+    self.localStorageKey = localStorageKey;
+    self.listsState = emptyMultipleListsState();
+    
+    self.generateListMenu = function(menuClass) {
+        if (!self.isOk) {
+            console.log("Could not generate listmenu");
+            updateFlag(self.isOk);
+            return self;
+        }
+        $(menuClass).empty();
+        self.listsState.savedNames.forEach( function(listName) {
+        $(menuClass).append('<li class="dropdown-option"><a href="#">' + listName + '</a></li>');
+        });
+    };
+    
+    self.storeLists = function(listStateStorageKey, listStateAddedArray) {
+        if(!self.isOk) {
+            console.log("Could not store multiple lists");
+            updateFlag(self.isOk);
+            return self;
+        }
+        //add the list name to multipleLists.listsState.savedNames array
+        self.listsState.savedNames.push(listStateStorageKey);
+        //add the key: value pair, listName: self.state.added, to the multipleLists.savedLists object   
+        self.listsState.savedLists[listStateStorageKey] = listStateAddedArray;
+        //store  in localstorage
+        storeInLocalStorage(localStorageKey, multipleLists);
+    };
+    
+    self.retrieveLists = function() {
+        if(!self.isOk) {
+            console.log("Could not retrieve multiple lists");
+            updateFlag(self.isOk);
+            return self;
+        }
+        
+        
+    };
 
-var List = function (localStorageKey) {
+    
+};
+
+var List = function () {
     var self = this;
 
-    self.localStorageKey = localStorageKey;
+    //self.localStorageKey = localStorageKey;
     
-    self.state = emptyState();
+    self.state = emptyListState();
         
     self.isOk = true;
     
@@ -334,16 +389,10 @@ var List = function (localStorageKey) {
                }
            
            }
-        
-        //self.state.localStorageKey = listName;
+           
+        self.state.localStorageKey = listName;
         storeInLocalStorage(self.localStorageKey, self.state);
         
-        //add the list name to multipleLists.savedLists array
-        multipleLists.savedLists.push(listName);   //should I use self.state.localStorageKey here? can i not use listName anymore?
-        console.log("line 344" + " " + multipleLists);  // CURRENT LINE, FIGURING OUT IF LISTNAME ACTUALLY GETS ADDED TO SAVEDLISTS ARRAY AND IF SAVEDLISTS IS INDEED AN ARRAY
-        //add the saved list names to dropdown menu and store them in localstorage
-        generateListMenu($('.dropdown-menu'));
-        storeInLocalStorage("allListNames", multipleLists);
         
         return self;
         
@@ -351,7 +400,7 @@ var List = function (localStorageKey) {
     };
     
     
-    self.retrieveList = function() {
+    self.retrieveList = function(listName) {
         
             // Returns true if the list successfully loaded, otherwise false
         if(!self.isOk) {
@@ -359,22 +408,10 @@ var List = function (localStorageKey) {
             return self;
         }
         
-        loadFromLocalStorage(self.state.localStorageKey, self.state);
-        loadFromLocalStorage("allListNames", multipleLists);
+        loadFromLocalStorage(self.localStorageKey, self.state);
         return self;
     };     
     
-    self.updateFlag = function() {
-        if (self.isOk) {
-           self.isOk = false;
-           //console.log("isOk is now false");
-         }    
-        else if (!self.isOk) {    //should I write else if
-            self.isOk = true;
-            //console.log("isOk is now true");
-        }
-       
-    };
     
    
 
@@ -382,7 +419,8 @@ var List = function (localStorageKey) {
         
     
 
-var todoList = new List('todoList');
+var todoList = new List();
+var todoLists = new multipleLists('todoLists');
 
 
 
