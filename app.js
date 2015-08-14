@@ -86,13 +86,13 @@ $(document).ready(function() {
         $('#input').find("form")[0].reset();    //empties input area
     });
 
-    //stores list when save button is clicked. has an alert for now.  
+    //stores list when save button is clicked.   
       
     $('#saveButton').click(function(){
         todoList.storeList();
         todoLists.storeLists(todoList.state.localStorageKey, todoList.state.added);
         todoLists.generateListMenu($('.dropdown-menu'));
-        alert("List saved");
+        
     });
     
     $('#clearButton').click(function() {
@@ -173,21 +173,21 @@ var loadFromLocalStorage = function(storageItemKey, storageItem) {
         loadItem = localStorage.getItem(storageItemKey)
         
         
-        if (storageItem === undefined) {
+        if (loadItem === undefined) {
             console.log("Could not load, Key does not exist");
             return storageItem;   //DO I NEED TO RETURN ANYTHING HERE?
                                                                                                                     
          // to account for when storage is empy
         }
-        else if (storageItem === null) {                                                            
+        else if (loadItem === null) {                                                            
             console.log("Could not load, key does not exist");
             return storageItem;
         }                                                                                                                           
  
        storageItem = JSON.parse(loadItem);  
-       console.log(loadItem);
+       console.log(storageItem);
         
-       return loadItem
+       return storageItem
          
 };
 
@@ -384,6 +384,10 @@ var List = function () {
         
         else { 
            var listName = prompt("You must enter a list title");
+           if (listName === null) {
+               return;
+               
+           }
            while (!listName) { 
                var listName = prompt("You must enter a list title");
                }
@@ -392,6 +396,7 @@ var List = function () {
            
         self.state.localStorageKey = listName;
         storeInLocalStorage(self.localStorageKey, self.state);
+        alert("List saved");
         
         
         return self;
