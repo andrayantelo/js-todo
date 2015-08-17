@@ -128,10 +128,11 @@ $(document).ready(function() {
       
       
     $('.dropdown-menu').on('click', '.dropdown-option', function() {
+        //generates list div with appropriate list when title of list is clicked from dropdown menu
         var loadList = this.textContent
-        console.log(loadList);
-        todoLists.generateListDivFromLoadedList(loadList, $('#list'));
-        alert("this worked");
+        todoList.state = todoList.retrieveList(loadList);
+        $('#listTitle').val(loadList);
+        todoList.generateListDiv($('#list'));
     });  
       
 //    $('.dropdown-option').click( function() {
@@ -328,7 +329,7 @@ var List = function () {
     };
 
     
-    self.generateListDiv = function(listDiv) {
+    self.generateListDiv = function(listDiv, listTitle) {
         //generates and updates HTML for each added item 
         if(!self.isOk) {
             console.log("Can not generate list div")
@@ -436,8 +437,8 @@ var List = function () {
             return self;
         }
         
-        loadFromLocalStorage(self.localStorageKey, self.state);
-        return self;
+        return loadFromLocalStorage(self.localStorageKey, self.state);
+        
     };     
     
     
