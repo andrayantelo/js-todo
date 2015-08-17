@@ -65,8 +65,9 @@ $(document).ready(function() {
         $(this).css('color', 'white');
     });
 
-// makes the red x appear to remove a list item when mouse hovers over item    
+   
    $('#list').delegate('li', 'mouseover mouseout', function(event) {
+       // makes the red x appear to remove a list item when mouse hovers over item 
        var $this = $(this).find('a');
        
        if(event.type === 'mouseover') {
@@ -86,11 +87,13 @@ $(document).ready(function() {
         $('#input').find("form")[0].reset();    //empties input area
     });
 
-    //stores list when save button is clicked.   
+      
       
     $('#saveButton').click(function(){
+        //stores list when save button is clicked. 
+        //store the List object and store it's name in multipleLists in localStorage
         todoList.storeList();
-        todoLists.storeLists(todoList.state.localStorageKey, todoList.state.added);
+        todoLists.addToSavedNames(todoList.state.localStorageKey);
         todoLists.generateListMenu($('.dropdown-menu'));
         
     });
@@ -196,9 +199,6 @@ var loadFromLocalStorage = function(storageItemKey) {
 };
 
 
-
-
- //separate method to add html so that a saved list's name appears in dropdown menu
     
 var emptyListState = function() {
         return {
@@ -209,6 +209,7 @@ var emptyListState = function() {
         //array of items
         added: [],
         counter: 0,
+        //also title of list
         localStorageKey: "",
         //saved: []
         }
@@ -229,6 +230,7 @@ var multipleLists = function(localStorageKey) {
     self.listsState = emptyMultipleListsState();
     
     self.generateListMenu = function(menuClass) {
+        //generates and updates HTML for dropdown menu
         if (!self.isOk) {
             console.log("Could not generate listmenu");
             updateFlag(self.isOk);
@@ -241,12 +243,13 @@ var multipleLists = function(localStorageKey) {
     };
     
     self.storeState = function() {
+        //stores the names of multipleLists in localStorage
         if(!self.isOk) {
             console.log("Could not store multiple lists");
             updateFlag(self.isOk);
             return self;
         }
-        //store the state
+        
         storeInLocalStorage(self.localStorageKey, self.listsState);
     };
     
@@ -257,6 +260,7 @@ var multipleLists = function(localStorageKey) {
     };
     
     self.loadState = function() {
+        //loads the list names of multipleLists
        // if(!self.isOk) {
        //     console.log("Could not retrieve multiple lists");
        //     updateFlag(self.isOk);
@@ -281,8 +285,8 @@ var List = function () {
     
   //  self.itemCounter = JSON.parse(localStorage.getItem('counter')) || 0;
   
-  //method that replaces state.order with new array of IDs
     self.newOrder = function(newSortedIds) {
+        //new array of ID's is stored in self.state.order
         if (!self.isOk) {
             console.log("can not add new order of IDs");
             return self
@@ -293,6 +297,9 @@ var List = function () {
     };
     
     self.generateId = function(prefix) {
+        //generates a new unique item ID and increases the counter up by one
+        //the counter keeps track of how many times this method is run and is
+        //what makes the ID unique
         var itemId = prefix + "-" + self.state.counter;
         self.state.counter = self.state.counter + 1
         var myCounter = JSON.stringify(self.state.counter);
@@ -301,6 +308,7 @@ var List = function () {
 
 
     self.addToList = function(item) {
+        //adds an item to an individual List
         if (!self.isOk) {
             console.log("Can not add to list");
             return self;
@@ -321,6 +329,7 @@ var List = function () {
 
     
     self.generateListDiv = function(listDiv) {
+        //generates and updates HTML for each added item 
         if(!self.isOk) {
             console.log("Can not generate list div")
             return self;
@@ -340,6 +349,7 @@ var List = function () {
    
       
     self.removeFromList = function(uniqueId) {
+        //removes an item from the List object
         if (!self.isOk) {
             console.log("Will not remove from list"); 
             return self;
@@ -367,12 +377,13 @@ var List = function () {
   
     
     self.clearList = function(titleBox) {
+        //clears all items and list title of a List
         if(!self.isOk) {
             console.log("Unable to clear list");
             return self;
         }
         
-        self.state = emptyState();
+        self.state = emptyListState();
         titleBox.val('');
         
         return self;
@@ -381,7 +392,8 @@ var List = function () {
     };
     
    
-    self.storeList = function() {    
+    self.storeList = function() {   
+        //stores an individual List in localStorage 
          if(!self.isOk) {
             console.log("Unable to store list");
             return self;
@@ -416,6 +428,7 @@ var List = function () {
     
     
     self.retrieveList = function(listName) {
+        //loads an individual List from localStorage
         
             // Returns true if the list successfully loaded, otherwise false
         if(!self.isOk) {
