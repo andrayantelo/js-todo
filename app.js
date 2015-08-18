@@ -106,11 +106,18 @@ $(document).ready(function() {
        
     $('#deleteButton').click(function() {
         //deletes the list from localStorage
-        todoLists.removeFromSavedNames(todoList.state.localStorageKey);
-        todoLists.storeState();
-        removeFromLocalStorage(todoList.state.localStorageKey);
-        todoList.clearList('#listTitle');
-        
+        var response = confirm("Are you sure you wish to permanently delete list?");
+        if (response === true) {
+            todoLists.removeFromSavedNames(todoList.state.localStorageKey);
+            todoLists.storeState();
+            todoLists.generateListMenu($('.dropdown-menu'));
+            removeFromLocalStorage(todoList.state.localStorageKey);
+            todoList.clearList($('#listTitle'));
+            todoList.generateListDiv($('#list'));
+        }
+        if (response === false) {
+            return;
+        }
     });
     
     
@@ -261,7 +268,7 @@ var multipleLists = function(localStorageKey) {
         storeInLocalStorage(self.localStorageKey, self.listsState);
     };
     
-    self.addToSavedNames = function(listStateStorageKey) {
+    self.addToSavedNames = function(listName) {
         //adds saved list title to the listsState.savedNames array
         self.listsState.savedNames.push(listName);
         self.storeState();
