@@ -104,6 +104,14 @@ $(document).ready(function() {
         
     });
        
+    $('#deleteButton').click(function() {
+        //deletes the list from localStorage
+        todoLists.removeFromSavedNames(todoList.state.localStorageKey);
+        todoLists.storeState();
+        removeFromLocalStorage(todoList.state.localStorageKey);
+        todoList.clearList('#listTitle');
+        
+    });
     
     
     
@@ -193,6 +201,10 @@ var loadFromLocalStorage = function(storageItemKey, substituteLoadedItem ) {
          
 };
 
+var removeFromLocalStorage = function(storageKey) {
+    //remove item with localstorage key storageKey from localstorage
+    localStorage.removeItem(storageKey);
+};
 
     
 var emptyListState = function() {
@@ -251,8 +263,17 @@ var multipleLists = function(localStorageKey) {
     
     self.addToSavedNames = function(listStateStorageKey) {
         //adds saved list title to the listsState.savedNames array
-        self.listsState.savedNames.push(listStateStorageKey);
+        self.listsState.savedNames.push(listName);
         self.storeState();
+    };
+    
+    self.removeFromSavedNames = function(listName) {
+        //remove saved list title from the listsState.savedNames array
+        var nameIndex = self.listsState.savedNames.indexOf(listName);
+        self.listsState.savedNames.splice(nameIndex, 1);
+        self.storeState();
+        
+            
     };
     
     self.loadState = function() {
