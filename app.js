@@ -106,6 +106,9 @@ $(document).ready(function() {
        
     $('#deleteButton').click(function() {
         //deletes the list from localStorage
+        if (todoList.state.localStorageKey === "") {
+            return;
+        }
         var response = confirm("Are you sure you wish to permanently delete list?");
         if (response === true) {
             todoLists.removeFromSavedNames(todoList.state.localStorageKey);

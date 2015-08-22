@@ -73,7 +73,8 @@ body, #input, #bottomButtonsContainer, #addButtonContainer {
     position: absolute;
     margin-top: 5px;
     cursor: pointer;
-    box-sizing: content-box;
+    /*box-sizing: content-box;*/
+    outline:none;
 }
 
 #addButtonContainer {
