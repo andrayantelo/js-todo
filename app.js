@@ -216,7 +216,6 @@ var loadFromLocalStorage = function(storageItemKey, substituteLoadedItem ) {
  
        else {
        var storageItem = JSON.parse(storageItem);  
-       console.log(storageItem);
         
        return storageItem
        }
@@ -229,20 +228,7 @@ var removeFromLocalStorage = function(storageKey) {
 };
 
     
-var emptyListState = function() {
-        return {
-        //object with unique ID and item pairs
-        items: {},
-        //array of unique IDs (for each item of a List)
-        order: [],
-        //array of items
-        added: [],
-        counter: 0,
-        //also title of list
-        localStorageKey: "",
-        //saved: []
-        }
-};
+
     
 var emptyMultipleListsState = function() {
     return {
@@ -262,7 +248,7 @@ var multipleLists = function(localStorageKey) {
         //generates and updates HTML for dropdown menu
         if (!self.isOk) {
             console.log("Could not generate listmenu");
-            updateFlag(self.isOk);
+            updateFlag(self);
             return self;
         }
             
@@ -276,7 +262,7 @@ var multipleLists = function(localStorageKey) {
         //stores the names of multipleLists in localStorage
         if(!self.isOk) {
             console.log("Could not store multiple lists");
-            updateFlag(self.isOk);
+            updateFlag(self);
             return self;
         }
         
@@ -300,16 +286,31 @@ var multipleLists = function(localStorageKey) {
     
     self.loadState = function() {
         //loads the list names of multipleLists
-       // if(!self.isOk) {
-       //     console.log("Could not retrieve multiple lists");
-       //     updateFlag(self.isOk);
-       //     return self;
-        //}
+        if(!self.isOk) {
+            console.log("Could not retrieve multiple lists");
+            updateFlag(self);
+            return self;
+        }
         return loadFromLocalStorage(self.localStorageKey, emptyMultipleListsState());
         
     };
 
     
+};
+
+var emptyListState = function() {
+        return {
+        //object with unique ID and item pairs
+        items: {},
+        //array of unique IDs (for each item of a List)
+        order: [],
+        //array of items
+        added: [],
+        counter: 0,
+        //also title of list
+        localStorageKey: "",
+        //saved: []
+        }
 };
 
 var List = function () {
@@ -328,11 +329,12 @@ var List = function () {
         //new array of ID's is stored in self.state.order
         if (!self.isOk) {
             console.log("can not add new order of IDs");
-            return self
+            updateFlag(self);
+            return self;
         }
         
-        self.state.order = newSortedIds;
-        console.log(self.state.order);
+        return self.state.order = newSortedIds;
+        
     };
     
     self.generateId = function(prefix) {
@@ -350,6 +352,7 @@ var List = function () {
         //adds an item to an individual List
         if (!self.isOk) {
             console.log("Can not add to list");
+            updateFlag(self);
             return self;
         }
     
@@ -371,6 +374,7 @@ var List = function () {
         //generates and updates HTML for each added item 
         if(!self.isOk) {
             console.log("Can not generate list div")
+            updateFlag(self);
             return self;
         }
        
@@ -390,7 +394,8 @@ var List = function () {
     self.removeFromList = function(uniqueId) {
         //removes an item from the List object
         if (!self.isOk) {
-            console.log("Will not remove from list"); 
+            console.log("Will not remove from list");
+            updateFlag(self); 
             return self;
         }
       //  if (self.isOk) {
@@ -419,6 +424,7 @@ var List = function () {
         //clears all items and list title of a List
         if(!self.isOk) {
             console.log("Unable to clear list");
+            updateFlag(self);
             return self;
         }
         
@@ -435,6 +441,7 @@ var List = function () {
         //stores an individual List in localStorage 
          if(!self.isOk) {
             console.log("Unable to store list");
+            updateFlag(self);
             return self;
         }
         
@@ -472,6 +479,7 @@ var List = function () {
             // Returns true if the list successfully loaded, otherwise false
         if(!self.isOk) {
             console.log("Unable to retrieve list");
+            updateFlag(self);
             return self;
         }
         
