@@ -20,53 +20,65 @@
 
 
 $(document).ready(function() {
+ 
+    var $newListTab = $('#newListTab');
+    var $listTitle = $('#listTitle');
+    var $checkListEntry = $('#checkListEntry');
+    var $button = $('.button');
+    var $addButton = $('#addButton');
+    var $list = $('#list');
+    var $input = $('#input');
+    var $saveButton = $('#saveButton');
+    var $clearButton = $('#clearButton');
+    var $deleteButton = $('#deleteButton');
+    var $dropdownMenu = $('.dropdown-menu');
     
-    
-    $('#newListTab').mouseenter(function() {
+    $newListTab.mouseenter(function() {
         $(this).toggleClass("active", true);
     });
     
-    $('#newListTab').mouseleave(function() {
+    $newListTab.mouseleave(function() {
         $(this).toggleClass("active", false);
     });
     
-    $('#newListTab').click(function() {
+    $newListTab.click(function() {
         console.log("new list has been clicked");
-        todoList.clearList($('#listTitle'));
-        todoList.generateListDiv($('#list'));
+        todoList.clearList($listTitle);
+        todoList.generateListDiv($list);
     });
 
-    $("#listTitle").focus();
+    $listTitle.focus();
     
-    $('#listTitle').bind("keydown", function(e) {
+    $listTitle.bind("keydown", function(e) {
         if (e.which == 13)
         {
             e.preventDefault();
-            $('#checkListEntry').focus();
+            console.log("enter was pressed");
+            $checkListEntry.focus();
         }
     });
     
-    $('#checkListEntry').bind("keydown", function(e) {
+    $checkListEntry.bind("keydown", function(e) {
         if (e.which == 13)
         {
             e.preventDefault();  
-            $('#addButton').click();
+            $addButton.click();
             
         }
     });
-    $('.button').mouseenter(function() {
+    $button.mouseenter(function() {
     
         $(this).css('background-color','white');
         $(this).css('color', '#3d1256');
     });
-    $('.button').mouseleave(function() {
+    $button.mouseleave(function() {
     
         $(this).css('background-color','#3d1256');
         $(this).css('color', 'white');
     });
 
    
-   $('#list').delegate('li', 'mouseover mouseout', function(event) {
+   $list.delegate('li', 'mouseover mouseout', function(event) {
        // makes the red x appear to remove a list item when mouse hovers over item 
        var $this = $(this).find('a');
        
@@ -77,34 +89,34 @@ $(document).ready(function() {
        }
    });
     
-    $('#addButton').click(function(){
+    $addButton.click(function(){
     
-        var toAdd = $('#checkListEntry').val();
+        var toAdd = $checkListEntry.val();
     
         todoList.addToList(toAdd);
     
-        todoList.generateListDiv($('#list'));
-        $('#input').find("form")[0].reset();    //empties input area
+        todoList.generateListDiv($list);
+        $input.find("form")[0].reset();    //empties input area
     });
 
       
       
-    $('#saveButton').click(function(){
+    $saveButton.click(function(){
         //stores list when save button is clicked. 
         //store the List object and store it's name in multipleLists in localStorage
         todoList.storeList();
         todoLists.addToSavedNames(todoList.state.localStorageKey);
-        todoLists.generateListMenu($('.dropdown-menu'));
+        todoLists.generateListMenu($dropdownMenu);
         
     });
     
-    $('#clearButton').click(function() {
-        todoList.clearList($('#listTitle'));
-        todoList.generateListDiv($('#list'));
+    $clearButton.click(function() {
+        todoList.clearList($listTitle);
+        todoList.generateListDiv($list);
         
     });
        
-    $('#deleteButton').click(function() {
+    $deleteButton.click(function() {
         //deletes the list from localStorage
         if (todoList.state.localStorageKey === "") {
             return;
@@ -113,10 +125,10 @@ $(document).ready(function() {
         if (response === true) {
             todoLists.removeFromSavedNames(todoList.state.localStorageKey);
             todoLists.storeState();
-            todoLists.generateListMenu($('.dropdown-menu'));
+            todoLists.generateListMenu($dropdownMenu);
             removeFromLocalStorage(todoList.state.localStorageKey);
-            todoList.clearList($('#listTitle'));
-            todoList.generateListDiv($('#list'));
+            todoList.clearList($listTitle);
+            todoList.generateListDiv($list);
         }
         if (response === false) {
             return;
@@ -126,17 +138,17 @@ $(document).ready(function() {
     
     
     
-    $('#list').on('click', 'a', function() {
+    $list.on('click', 'a', function() {
         console.log("clicking on x is doing something");
         var parentId = $(this).parent().attr("id");
         
         todoList.removeFromList(parentId);
-        todoList.generateListDiv($('#list'));
+        todoList.generateListDiv($list);
       
     });
     
     
-    $('#list').sortable({
+    $list.sortable({
         update: function(event, ui) {
 			var sortedIds = $(this).sortable('toArray');
             todoList.newOrder(sortedIds);
@@ -145,14 +157,14 @@ $(document).ready(function() {
     });
       
       
-    $('.dropdown-menu').on('click', '.dropdown-option', function() {
+    $dropdownMenu.on('click', '.dropdown-option', function() {
         //generates list div with appropriate list when title of list is clicked from dropdown menu
         var loadList = this.textContent
         console.log(loadList);
         todoList.state = todoList.retrieveList(loadList);
         console.log(todoList.state + todoList.state.localStorageKey);
-        $('#listTitle').val(loadList);
-        todoList.generateListDiv($('#list'));
+        $listTitle.val(loadList);
+        todoList.generateListDiv($list);
     });  
 
         //want to load the list names so that they appear in the dropdown menu
@@ -161,9 +173,9 @@ $(document).ready(function() {
         if (todoLists.loadState() !== null) {            // IS THIS WRITTEN IN A GOOD WAY?
             todoLists.listsState = todoLists.loadState();
         }
-        todoLists.generateListMenu($('.dropdown-menu'));
+        todoLists.generateListMenu($dropdownMenu);
         todoList.isOk = true;
-        todoList.generateListDiv($('#list'));
+        todoList.generateListDiv($list);
         
     
     
@@ -204,7 +216,6 @@ var loadFromLocalStorage = function(storageItemKey, substituteLoadedItem ) {
  
        else {
        var storageItem = JSON.parse(storageItem);  
-       console.log(storageItem);
         
        return storageItem
        }
@@ -217,20 +228,7 @@ var removeFromLocalStorage = function(storageKey) {
 };
 
     
-var emptyListState = function() {
-        return {
-        //object with unique ID and item pairs
-        items: {},
-        //array of unique IDs (for each item of a List)
-        order: [],
-        //array of items
-        added: [],
-        counter: 0,
-        //also title of list
-        localStorageKey: "",
-        //saved: []
-        }
-};
+
     
 var emptyMultipleListsState = function() {
     return {
@@ -250,7 +248,7 @@ var multipleLists = function(localStorageKey) {
         //generates and updates HTML for dropdown menu
         if (!self.isOk) {
             console.log("Could not generate listmenu");
-            updateFlag(self.isOk);
+            updateFlag(self);
             return self;
         }
             
@@ -264,7 +262,7 @@ var multipleLists = function(localStorageKey) {
         //stores the names of multipleLists in localStorage
         if(!self.isOk) {
             console.log("Could not store multiple lists");
-            updateFlag(self.isOk);
+            updateFlag(self);
             return self;
         }
         
@@ -288,16 +286,31 @@ var multipleLists = function(localStorageKey) {
     
     self.loadState = function() {
         //loads the list names of multipleLists
-       // if(!self.isOk) {
-       //     console.log("Could not retrieve multiple lists");
-       //     updateFlag(self.isOk);
-       //     return self;
-        //}
+        if(!self.isOk) {
+            console.log("Could not retrieve multiple lists");
+            updateFlag(self);
+            return self;
+        }
         return loadFromLocalStorage(self.localStorageKey, emptyMultipleListsState());
         
     };
 
     
+};
+
+var emptyListState = function() {
+        return {
+        //object with unique ID and item pairs
+        items: {},
+        //array of unique IDs (for each item of a List)
+        order: [],
+        //array of items
+        added: [],
+        counter: 0,
+        //also title of list
+        localStorageKey: "",
+        //saved: []
+        }
 };
 
 var List = function () {
@@ -316,11 +329,12 @@ var List = function () {
         //new array of ID's is stored in self.state.order
         if (!self.isOk) {
             console.log("can not add new order of IDs");
-            return self
+            updateFlag(self);
+            return self;
         }
         
-        self.state.order = newSortedIds;
-        console.log(self.state.order);
+        return self.state.order = newSortedIds;
+        
     };
     
     self.generateId = function(prefix) {
@@ -338,6 +352,7 @@ var List = function () {
         //adds an item to an individual List
         if (!self.isOk) {
             console.log("Can not add to list");
+            updateFlag(self);
             return self;
         }
     
@@ -359,6 +374,7 @@ var List = function () {
         //generates and updates HTML for each added item 
         if(!self.isOk) {
             console.log("Can not generate list div")
+            updateFlag(self);
             return self;
         }
        
@@ -378,7 +394,8 @@ var List = function () {
     self.removeFromList = function(uniqueId) {
         //removes an item from the List object
         if (!self.isOk) {
-            console.log("Will not remove from list"); 
+            console.log("Will not remove from list");
+            updateFlag(self); 
             return self;
         }
       //  if (self.isOk) {
@@ -407,6 +424,7 @@ var List = function () {
         //clears all items and list title of a List
         if(!self.isOk) {
             console.log("Unable to clear list");
+            updateFlag(self);
             return self;
         }
         
@@ -423,6 +441,7 @@ var List = function () {
         //stores an individual List in localStorage 
          if(!self.isOk) {
             console.log("Unable to store list");
+            updateFlag(self);
             return self;
         }
         
@@ -460,6 +479,7 @@ var List = function () {
             // Returns true if the list successfully loaded, otherwise false
         if(!self.isOk) {
             console.log("Unable to retrieve list");
+            updateFlag(self);
             return self;
         }
         

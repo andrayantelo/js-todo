@@ -28,26 +28,113 @@ test("loadFromLocalStorage test", function() {
     localStorage.setItem(myCarKey, JSON.stringify(myCar));
     var retrievedCar = loadFromLocalStorage(myCarKey);
     deepEqual(retrievedCar, myCar);
-    console.log(retrievedCar);
     
     equal(loadFromLocalStorage("carKeys"), undefined);
     
     
 });
 
+var myList = new List('myList');
 
-//var item = 'item';
-//var myList = new List('myList');
-//var car = 'car';
-//var book = 'book';
-//myList.isOk = true;
-//console.log("BEGINNING STATUS" + " " + myList.isOk)
+test("updateFlag test", function() {
+     myList.isOk = true;
+     equal(myList.isOk, true);
+     updateFlag(myList);
+    
+     equal(myList.isOk, false);
+     
+     updateFlag(myList);
+     
+     
+     equal(myList.isOk, true);
 
-//test("generateId test", function() {
-//    var testId = myList.generateId("test");
-//    equal(testId, "test-0");
-//    equal(myList.state.counter, 1);
+});
+
+test("removeFromLocalStorage test", function() {
+    var cat = "cat";
+    localStorage.setItem("Key", cat);
+    removeFromLocalStorage("Key");
+    equal(localStorage.getItem("Key"), null);
+});
+
+var myLists = new multipleLists('myLists');
+myLists.listsState.savedNames.push("Todo List");
+myLists.listsState.savedNames.push("Groceries");
+
+test("storeState test", function() {
+    myLists.storeState();
+    deepEqual(JSON.parse(localStorage.getItem(myLists.localStorageKey)), myLists.listsState);
+    
+});
+
+myLists.listsState = emptyMultipleListsState();
+
+test("addToSavedNames test", function() {
+    myLists.addToSavedNames("car");
+    equal(myLists.listsState.savedNames.indexOf('car'),0);
+    
+});
+
+test("removeFromSavedNames test", function() {
+    myLists.removeFromSavedNames("car");   //IS IT WRONG TO USE CAR AGAIN HERE
+    equal(myLists.listsState.savedNames.indexOf('car'),-1);
+});
+
+test("loadState test", function() {
+    var bundle = new multipleLists('bundle');
+    
+    deepEqual(bundle.loadState(), emptyMultipleListsState());
+    bundle.addToSavedNames("car");
+    bundle.storeState();
+    deepEqual(bundle.loadState(), bundle.listsState);
+    
+});
+
+//function createUlFixture() {
+//    $('#qunit-fixture').append("<ul></ul>");
+//};
+    
+
+//test("generateListMenu test", function() {
+    
+//    fixture = createUlFixture();
+
+//    var bundle = new multipleLists('bundle');
+//    bundle.isOk = false;
+//    bundle.generateListMenu(fixture);
+//    equal(true, bundle.isOk);
+    
+//    equal(fixture.length, 0);
+   
+//    bundle.listsState.savedNames.push('cat');
+//    console.log(fixture.length + "HERHEH");
+//    bundle.generateListMenu(fixture);
+    
+    
+    //equal($dropdownMenu.length, 1);
+    
 //});
+
+
+////TESTS FOR LIST OBJECT
+
+
+test("newOrder test", function() {
+    var aList = new List();
+    
+    deepEqual(aList.newOrder(["one", "two", "three"]), aList.state.order);
+});
+
+test("generateId test", function() {
+    var aList = new List();
+    var testId = aList.generateId("test");  
+    equal(testId, "test-0");
+    equal(aList.state.counter, 1);
+});
+
+
+
+
 
 //test("addToList test", function() {
 //    expect(12);
@@ -102,19 +189,6 @@ test("loadFromLocalStorage test", function() {
 //});
 
 
-//test("updateFlag test", function() {
-//     myList.isOk = true;
-//     equal(myList.isOk, true);
-//     myList.updateFlag();
-    
-//     equal(myList.isOk, false);
-     
-//     myList.updateFlag();
-     
-     
-//     equal(myList.isOk, true);
-
-//});
 
 
 // test("generateListDiv test", function() {
