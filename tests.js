@@ -90,30 +90,34 @@ test("loadState test", function() {
     
 });
 
-//function createUlFixture() {
-//    $('#qunit-fixture').append("<ul></ul>");
-//};
+function createUlFixture() {
+    var $qunit = $('#qunit-fixture');
+    var fixture = $('#qunit-fixture').append("<ul></ul>");
+    
+};
     
 
-//test("generateListMenu test", function() {
+test("generateListMenu test", function() {
     
-//    fixture = createUlFixture();
+    var fixture = $('#qunit-fixture');
+    fixture.append("<ul></ul>");
+    
 
-//    var bundle = new multipleLists('bundle');
-//    bundle.isOk = false;
-//    bundle.generateListMenu(fixture);
-//    equal(true, bundle.isOk);
+    var bundle = new multipleLists('bundle');
+    bundle.isOk = false;
+    bundle.generateListMenu(fixture.find("ul"));
+    equal(fixture.find('ul').children().length, 0);
+    equal(true, bundle.isOk);
     
-//    equal(fixture.length, 0);
    
-//    bundle.listsState.savedNames.push('cat');
-//    console.log(fixture.length + "HERHEH");
-//    bundle.generateListMenu(fixture);
+    bundle.listsState.savedNames.push('cat');
+    bundle.generateListMenu(fixture.find("ul"));
+    equal(fixture.find('ul').children().length, 1);
+    fixture.find("ul").empty();
+    equal(fixture.find('ul').children().length, 0);
     
     
-    //equal($dropdownMenu.length, 1);
-    
-//});
+});
 
 
 ////TESTS FOR LIST OBJECT
@@ -132,96 +136,97 @@ test("generateId test", function() {
     equal(aList.state.counter, 1);
 });
 
-
-
-
-
-//test("addToList test", function() {
-//    expect(12);
-//    myList.state = emptyState();
-//    myList.addToList(item);
-//    equal(myList.state.added[0], item);
-//    equal(myList.state.items["item-0"], "item");
-//    equal(myList.state.order[0], "item-0");   // double check this sometime
-//    equal(myList.state.counter, 1);
+test("addToList test", function() {
+    var aList = new List();
+    aList.addToList("item");
+    equal(aList.state.added[0], "item");
+    equal(aList.state.items["item-0"], "item");
+    equal(aList.state.order[0], "item-0");
+    equal(aList.state.counter, 1);
     
-//    myList.addToList(car);
-//    equal(myList.state.added[1], car);
-//    equal(myList.state.items["item-1"], "car");
-//    equal(myList.state.order[1], "item-0");
-//    equal(myList.state.counter, 2);
-
-//    deepEqual(myList.state.added, ['item', 'car']);
-//    myList.addToList(book)
-//    equal(myList.isOk, true);
-//    deepEqual(myList.state.added, ['item', 'car', 'book']);
-//    equal(myList.state.counter, 3);
+    aList.addToList("car");
+    equal(aList.state.added[1], "car");
+    equal(aList.state.items["item-1"], "car");
+    equal(aList.state.counter, 2);
     
-//    localStorage.clear();
-    
-//});
+    deepEqual(aList.state.added, ["item", "car"]);
+    aList.addToList("book");
+    equal(aList.isOk, true);
+    deepEqual(aList.state.added, ['item', 'car', 'book']);
+    equal(aList.state.counter, 3);
+});
 
 
-//test("removeFromList test", function() {
-//    myList.state = emptyState();
-//    console.log(myList.state);
-//    myList.addToList(item);
-//    myList.addToList(car);
-//    myList.addToList(book);
-//    myList.removeFromList('item-0');
-//    equal(myList.state.counter, 3);
-//    deepEqual(myList.state.added, ['car', 'book']);
-//    deepEqual(myList.state.order, ['item-2', 'item-1']);
-//    equal(myList.state.items['item-1'], 'car');
-//    myList.removeFromList('dog');
-//    equal(myList.isOk, false);
-    
-//});
+test("removeFromList test", function() {
+    expect(5);
+    var myList = new List();
+    myList.addToList("item");
+    myList.addToList("car");
+    myList.addToList("book");
+    myList.removeFromList('item-0');
+    equal(myList.state.counter, 3);
+    deepEqual(myList.state.added, ['car', 'book']);
+    deepEqual(myList.state.order, ['item-2', 'item-1']);
+    equal(myList.state.items['item-0'], undefined);
+    myList.removeFromList('dog');
+    equal(myList.isOk, false);
+});
 
 
  
-//test("clearList test", function() {
-//    myList.isOk = true;
-//    myList.clearList();
-//    deepEqual(myList.state.added, []);
-//    deepEqual(myList.state.order, []);
-//    ok(jQuery.isEmptyObject(myList.state.items));
-//});
-
-
-
-
-// test("generateListDiv test", function() {
-   // expect(2);
-//    var divValue = $('#list').val();
-//    var divId = $('#list');
+test("clearList test", function() {
+    var $qunit = $('#qunit-fixture');
+    //console.log($("h1", $qunit).length);
+    var fixture = $qunit.append('<h1>"This is the title"</h1>');
     
-//    equal(divValue, "");
-//    myList.addToList(car);
-//    myList.addToList(book);
-//    myList.generateListDiv(divId);
-//    var divChildren = divId.children().length;
-//    equal(divChildren, 2);
+    var myList = new List();
+    myList.state.added = ["dog", "cat"];
+    myList.state.order = ["item-1", "item-2"];
+    myList.isOk = true;
+    myList.clearList(fixture);
+    equal($("div", $qunit).length, 0);
+    deepEqual(myList.state.added, []);
+    deepEqual(myList.state.order, []);
+    ok(jQuery.isEmptyObject(myList.state.items));
+});
+
+test("generateListDiv test", function() {
+    var myList = new List();
+    myList.addToList("item");
+    var fixture = $("#qunit-fixture");
+    fixture.append("<div></div>");
+    equal($("div", fixture).children().length,0);
     
-//});
-
-
-//test("storeList test", function() {
-//    expect(1);
-//    localStorage.clear();
+    myList.generateListDiv($("div", fixture));
+    equal($("div", fixture).children().length, 1);
     
-//    myList.storeList();
-//    equal(localStorage.length, 1);
-//});
-
-
-//test("retrieveList test", function() {
-//    expect(1);
-//    localStorage.clear();
-//    myList.retrieveList();
-//    equal(myList.isOk, false);
+    myList.addToList("dog");
+    myList.generateListDiv($("div", fixture));
+    equal($("div", fixture).children().length, 2);
     
-//});
+});
 
-//myList.state = emptyState();
+
+
+test("storeList test", function() {
+    var myList = new List();
+    expect(1);
+    localStorage.clear();
+    
+    myList.storeList();
+    equal(localStorage.length, 1);
+});
+
+
+test("retrieveList test", function() {
+    var myList = new List();
+    expect(2);
+    localStorage.clear();
+    myList.isOk = false;
+    myList.retrieveList();
+    equal(myList.isOk, true);
+    deepEqual(myList.retrieveList(), emptyListState());
+    
+});
+
 
